@@ -10,6 +10,14 @@ import { FaPowerOff } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuthStore } from '@/contexts/AuthStore';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuthStore();
@@ -52,9 +60,38 @@ export default function Header() {
           )}
         </div>
         <div className='flex items-center gap-3 md:hidden'>
-          <button className='flex items-center justify-center cursor-pointer'>
+          {/* <button className='flex items-center justify-center cursor-pointer'>
             <CiMenuFries className='font-extrabold text-white text-3xl' />
-          </button>
+          </button> */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className='flex items-center justify-center cursor-pointer'>
+              <CiMenuFries className='font-extrabold text-white text-3xl' />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className='bg-brand-main text-white border-none pb-4'>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                {isAuthenticated ? (
+                  <div className='flex items-center gap-4 pr-3'>
+                    <div className='flex items-center gap-3'>
+                      <div className='size-10 rounded-lg relative overflow-hidden'>
+                        <Image className='object-cover' src={user?.avatarUrl || '/avatar.png'} fill alt='avatar' />
+                      </div>
+                      <div>
+                        <h2 className='text-sm leading-[18px] text-white font-bold'>{user?.name || 'User'}</h2>
+                        <Link className='text-brand-btn text-sm leading-[18px] font-bold' href={'/profile'}>Личный кабинет</Link>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link className='h-9 pl-2 bg-brand-btn flex items-center justify-center min-w-full rounded-lg' href={'/auth'}>Войти</Link>
+                )}
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <LanguageSelector />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </nav>
     </header>

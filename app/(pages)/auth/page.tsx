@@ -1,7 +1,6 @@
 "use client";
 import SearchSidebar from '@/components/common/SearchSidebar'
 import React from 'react'
-import { CiFilter } from 'react-icons/ci'
 import { FaDiscord, FaGoogle } from 'react-icons/fa6';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import Image from 'next/image';
@@ -10,6 +9,7 @@ import MainButton from '@/components/elements/MainButton';
 import { FaTelegramPlane } from 'react-icons/fa';
 import { useAuthStore } from '@/contexts/AuthStore';
 import { useRouter } from 'next/navigation';
+import MobileFilterSidebar from '@/components/common/MobileFilterSidebar';
 
 const Auth = () => {
   const login = useAuthStore((s) => s.login);
@@ -20,10 +20,7 @@ const Auth = () => {
   };
   return (
     <>
-    <button className='lg:hidden w-full mb-3 cursor-pointer flex items-center justify-center gap-2 bg-brand-btn-gray-3 text-white text-sm h-10 border border-brand-btn-gray-3 rounded-xl transition-all duration-200'>
-      <CiFilter className='text-lg stroke-1' />
-      Фильтры
-    </button>
+    <MobileFilterSidebar />
     <div className='flex items-stretch min-h-screen'>
       <SearchSidebar /> 
       <div className='w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl lg:rounded-l-none p-3 lg:p-4'>

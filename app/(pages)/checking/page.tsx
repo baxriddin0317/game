@@ -1,13 +1,10 @@
 import MenuSidebar from '@/components/common/MenuSidebar';
-import { RiMenu2Line } from 'react-icons/ri';
+import MobileMenu from '@/components/common/MobileMenu';
 
 export default function APICheking() {
   return (
     <>
-      <button className='lg:hidden w-full mb-3 cursor-pointer flex items-center justify-center gap-2 bg-brand-btn-gray-3 text-white text-sm h-10 border border-brand-btn-gray-3 rounded-xl transition-all duration-200'>
-        <RiMenu2Line className='text-lg stroke-1' />
-        Меню
-      </button>
+      <MobileMenu />
       <div className='flex items-stretch min-h-screen'>
         <MenuSidebar /> 
         <div className='w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl lg:rounded-l-none p-3 lg:p-4'>

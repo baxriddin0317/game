@@ -1,17 +1,14 @@
 import MenuSidebar from '@/components/common/MenuSidebar'
+import MobileMenu from '@/components/common/MobileMenu'
 import CreateServer from '@/components/elements/CreateServer'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { RiMenu2Line } from 'react-icons/ri'
 
 const Servers = () => {
   return (
     <>
-      <button className='lg:hidden w-full mb-3 cursor-pointer flex items-center justify-center gap-2 bg-brand-btn-gray-3 text-white text-sm h-10 border border-brand-btn-gray-3 rounded-xl transition-all duration-200'>
-        <RiMenu2Line className='text-lg stroke-1' />
-        Меню
-      </button>
+      <MobileMenu />
       <div className='flex items-stretch min-h-screen'>
         <MenuSidebar /> 
         <div className='w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl lg:rounded-l-none'>

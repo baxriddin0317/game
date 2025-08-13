@@ -37,10 +37,19 @@ const menuItems = [
 ]   
 
 const MenuSidebar = () => {
-  const pathname = usePathname()
+ 
 
   return (
     <aside className='hidden bg-brand-main lg:flex flex-col w-[267px] rounded-2xl rounded-r-none py-5'>
+      <MenuContent />
+    </aside>
+  )
+}
+
+export const MenuContent = () => {
+  const pathname = usePathname()
+  return (
+    <>
       {menuItems.map((item, idx) => {
         const isActive = pathname === item.href
         return (
@@ -58,8 +67,9 @@ const MenuSidebar = () => {
           </Link>
         )
       })}
-    </aside>
+    
+    </>
   )
-}
+} 
 
 export default MenuSidebar
