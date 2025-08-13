@@ -161,7 +161,7 @@ export function ChartAreaGradient() {
           >
             <CartesianGrid  
               stroke="var(--chart-grid-color)"
-              className="dark:stroke-gray-700"
+              className="stroke-[#edeff2] dark:stroke-gray-700"
             />
             <XAxis
               dataKey="date"
