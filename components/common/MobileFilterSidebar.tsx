@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
   Sheet,
@@ -75,7 +76,7 @@ const MobileFilterSidebar = () => {
           </div>
         </div>
       </div>
-      <SheetContent className='bg-brand-main border-none w-full' side='left'>
+      <SheetContent className='bg-brand-main border-none w-full' side='left' onOpenAutoFocus={(e) => e.preventDefault()}>
         <SheetHeader>
           <SheetTitle className='sr-only'>title</SheetTitle>
         </SheetHeader>
