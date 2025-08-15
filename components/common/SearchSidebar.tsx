@@ -55,7 +55,7 @@ const selectOptions2 = [
   'Final',
 ]
 
-const servers = [
+export const servers = [
   { rank: 1, name: 'L2 Cornelius x500', price: '1.800 mc' },
   { rank: 2, name: 'Lineage II x500', price: '1.800 mc' },
   { rank: 3, name: 'Lineage II x500', price: '1.800 mc' },
@@ -93,7 +93,7 @@ export const FilterContent = () => (
     </div>
 
     
-    <div className="bg-[#292c34] mb-5">
+    <div className="hidden lg:inline-block bg-[#292c34] mb-5">
       <div className="p-5 rounded-xl w-full max-w-md">
         {/* Title */}
         <div className="flex items-center justify-center gap-2 mb-4">
