@@ -9,6 +9,7 @@ import type { ServerItem } from '@/lib/mockServers';
 import { Dialog, DialogTrigger } from '../ui/dialog';
 import { AuthRequiredDialog, VoteSuccessDialog } from './CustomDiaolog';
 import { useAuthStore } from '@/contexts/AuthStore';
+import DateResponse from '../elements/DateResponse';
 
 interface props {
   topserver?: boolean;
@@ -66,13 +67,7 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
           </div>
           <div className="text-xs font-bold">{server.rate}</div>
           <div className="text-xs text-nowrap font-bold">{server.chronicle}</div>
-          <time
-            dateTime={server.dateTime}
-            className="text-center text-xs font-bold"
-          >
-            <span className="hidden md:inline">{server.displayDate}</span>
-            <span className="inline md:hidden">{server.displayDate.slice(0, 5)}</span>
-          </time>
+          <DateResponse date={server.dateTime} color={true} />
         </div>
       </button>
       

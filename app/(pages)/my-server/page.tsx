@@ -1,6 +1,7 @@
 import MenuSidebar from '@/components/common/MenuSidebar'
 import MobileMenu from '@/components/common/MobileMenu'
 import CreateServer from '@/components/elements/CreateServer'
+import DateResponse from '@/components/elements/DateResponse'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -66,9 +67,7 @@ const Servers = () => {
                     <span className="text-brand-header-light dark:text-brand-slate-gray text-sm font-medium">
                     Открытие
                     </span>
-                    <span className={`text-brand-primary dark:text-white font-bold truncate`}>
-                      17.08.2016
-                    </span>
+                    <DateResponse date='2025-08-15' />
                   </div>
                 </div>
 
