@@ -67,7 +67,7 @@ export default function Header() {
             <DropdownMenuTrigger className='flex items-center justify-center cursor-pointer'>
               <CiMenuFries className='font-extrabold text-white text-3xl' />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className='bg-brand-main text-white border-none pb-4'>
+            <DropdownMenuContent className='bg-brand-main text-white border-none pb-4 space-y-2'>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
@@ -87,8 +87,11 @@ export default function Header() {
                   <Link className='h-9 pl-2 bg-brand-btn flex items-center justify-center min-w-full rounded-lg' href={'/auth'}>Войти</Link>
                 )}
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <LanguageSelector />
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <ThemeToggle />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

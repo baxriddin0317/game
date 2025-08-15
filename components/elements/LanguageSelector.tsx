@@ -8,7 +8,7 @@ type Language = 'EN' | 'KZ' | 'RU' | 'CK';
 export default function LanguageSelector() {
   const { currentLanguage, setLanguage } = useLanguageStore();
 
-  const languages: Language[] = ['EN', 'KZ', 'RU', 'CK'];
+  const languages: Language[] = ['EN', 'RU'];
 
   return (
     <div className="flex items-center">

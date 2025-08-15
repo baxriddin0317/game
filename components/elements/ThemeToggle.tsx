@@ -1,12 +1,13 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 
 export default function ThemeToggle() {
   const { theme, resolvedTheme, setTheme } = useTheme();
   const [isDark, setIsDark] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const uniqueId = useId();
 
   useEffect(() => {
     setIsMounted(true);
@@ -39,12 +40,12 @@ export default function ThemeToggle() {
       {/* Sun Icon */}
       <div className="w-5 h-5 flex items-center justify-center">
         <svg width={19} height={19} viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-          <rect width={19} height={19} fill="url(#pattern0_17_45)" />
+          <rect width={19} height={19} fill={`url(#pattern0_17_45_${uniqueId})`} />
           <defs>
-            <pattern id="pattern0_17_45" patternContentUnits="objectBoundingBox" width={1} height={1}>
-              <use xlinkHref="#image0_17_45" transform="scale(0.0526316)" />
+            <pattern id={`pattern0_17_45_${uniqueId}`} patternContentUnits="objectBoundingBox" width={1} height={1}>
+              <use xlinkHref={`#image0_17_45_${uniqueId}`} transform="scale(0.0526316)" />
             </pattern>
-            <image id="image0_17_45" width={19} height={19} preserveAspectRatio="none" xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAAAXNSR0IB2cksfwAAAMlQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////4EFx1gAAAEN0Uk5TAIQF/wMUZWIRIPZTBgJP8B6hNG/J3TObDkEH/fw/DJmXRPHvRaf796YkZvJnJqijEBoBfyGP64spE4APgxINYGMXnglqreUAAADZSURBVHicfZDLC0FhEMXneEWRbh6xEAkl0pUiCyl/OBIpIhKx8MyCBQkLr9t1v3sbysJsvvP9ZuacGhAX1I9iYQJeX2Z9CmFTLHfx2m+COYC7NuK8ErkAnPRd6ew+egBVPfgP3r3hF9C6O7EXPEnYcIaZk5RPbnjLLLTSmcu7jK6ZReax/QXxBSmJObPYzExxUBKT1JRZeJHGSPfLjJmlh/QnV549DJQh9A2WG2QHWfRymnFX7ums2CmgZczJzna+LVgJDe1bbpbqgkq17/2KHd/u96ZUqbJ6A5i4OzxbCIQCAAAAAElFTkSuQmCC" />
+            <image id={`image0_17_45_${uniqueId}`} width={19} height={19} preserveAspectRatio="none" xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAAAXNSR0IB2cksfwAAAMlQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////4EFx1gAAAEN0Uk5TAIQF/wMUZWIRIPZTBgJP8B6hNG/J3TObDkEH/fw/DJmXRPHvRaf796YkZvJnJqijEBoBfyGP64spE4APgxINYGMXnglqreUAAADZSURBVHicfZDLC0FhEMXneEWRbh6xEAkl0pUiCyl/OBIpIhKx8MyCBQkLr9t1v3sbysJsvvP9ZuacGhAX1I9iYQJeX2Z9CmFTLHfx2m+COYC7NuK8ErkAnPRd6ew+egBVPfgP3r3hF9C6O7EXPEnYcIaZk5RPbnjLLLTSmcu7jK6ZReax/QXxBSmJObPYzExxUBKT1JRZeJHGSPfLjJmlh/QnV549DJQh9A2WG2QHWfRymnFX7ums2CmgZczJzna+LVgJDe1bbpbqgkq17/2KHd/u96ZUqbJ6A5i4OzxbCIQCAAAAAElFTkSuQmCC" />
           </defs>
         </svg>
       </div>
@@ -66,12 +67,12 @@ export default function ThemeToggle() {
       {/* Moon Icon */}
       <div className="w-5 h-5 flex items-center justify-center">
         <svg width={16} height={17} viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-          <rect width={16} height={17} fill="url(#pattern0_17_46)" />
+          <rect width={16} height={17} fill={`url(#pattern0_17_46_${uniqueId})`} />
           <defs>
-            <pattern id="pattern0_17_46" patternContentUnits="objectBoundingBox" width={1} height={1}>
-              <use xlinkHref="#image0_17_46" transform="scale(0.0625 0.0588235)" />
+            <pattern id={`pattern0_17_46_${uniqueId}`} patternContentUnits="objectBoundingBox" width={1} height={1}>
+              <use xlinkHref={`#image0_17_46_${uniqueId}`} transform="scale(0.0625 0.0588235)" />
             </pattern>
-            <image id="image0_17_46" width={16} height={17} preserveAspectRatio="none" xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAARCAMAAADjcdz2AAAAAXNSR0IB2cksfwAAAIFQTFRFWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzjWN1OwAAACt0Uk5TAKp6Vf9jdlA9dPmwSfetKNzC8E/YQ6SIGTqveGZ35ikcWD859OwrVMn2QpaCxNEAAACTSURBVHicTY/ZCsJQDEQzFJe6W6VQkGrxwf//GR8UiiCKUOq+K2LufgfCZE4gMCAh4Eda4AlA+Higytfg5UD9y1Z5ONB4s9VuFrSewsKLBZ279ObJgN5VevtgQHRWS7fUYHjUp36hQLw37wbYCZAUZBWDRemWfIHGGz+PuEu2djnNRdspVipmWMj6RDNgOSmTOa9/ib8eU1P/U/UAAAAASUVORK5CYII=" />
+            <image id={`image0_17_46_${uniqueId}`} width={16} height={17} preserveAspectRatio="none" xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAARCAMAAADjcdz2AAAAAXNSR0IB2cksfwAAAIFQTFRFWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzWWJzjWN1OwAAACt0Uk5TAKp6Vf9jdlA9dPmwSfetKNzC8E/YQ6SIGTqveGZ35ikcWD859OwrVMn2QpaCxNEAAACTSURBVHicTY/ZCsJQDEQzFJe6W6VQkGrxwf//GR8UiiCKUOq+K2LufgfCZE4gMCAh4Eda4AlA+Higytfg5UD9y1Z5ONB4s9VuFrSewsKLBZ279ObJgN5VevtgQHRWS7fUYHjUp36hQLw37wbYCZAUZBWDRemWfIHGGz+PuEu2djnNRdspVipmWMj6RDNgOSmTOa9/ib8eU1P/U/UAAAAASUVORK5CYII=" />
           </defs>
         </svg>
       </div>

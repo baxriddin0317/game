@@ -78,7 +78,7 @@ const CreateServer = () => {
     new Date("2025-06-01")
   )
   const [month, setMonth] = React.useState<Date | undefined>(date)
-  const serverTypes = ['PVE', 'PVP', 'PVE/PVP', 'Custom']
+  const serverTypes = ['PTS', 'Java', 'PVE', 'PVP', 'PVE/PVP', 'Custom']
 
   // Load data from localStorage on component mount
   useEffect(() => {

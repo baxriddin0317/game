@@ -30,7 +30,7 @@ const CustomDiaolog = ({handleClick}: props) => {
   )
 }
 
-const AuthRequiredDialog = () => {
+export const AuthRequiredDialog = () => {
   const route = useRouter();
   return (
     <DialogContent className='bg-transparent border-none p-0'>
@@ -63,7 +63,7 @@ const AuthRequiredDialog = () => {
   )
 }
 
-const VoteSuccessDialog = ({handleClick}: {handleClick?: () => void}) => {
+export const VoteSuccessDialog = ({handleClick}: {handleClick?: () => void}) => {
   return (
     <DialogContent className='bg-transparent border-none p-0'>
       <div className='flex items-center justify-center relative bg-white min-h-[299px] border-none rounded-3xl shadow-2xl '>
