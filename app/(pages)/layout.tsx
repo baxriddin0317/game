@@ -9,7 +9,6 @@ export default function MainLayout({
 }>) {
   return (
     <main className="max-w-[1456px] mx-auto px-1 sm:px-4 xl:px-2 pt-32 md:pt-52 lg:pt-64">
-      {/* <Image src="/right.png" alt="Right" width={1487} height={999} className="absolute top-0 right-0 z-0 w-[1487px] h-auto" /> */}
       <Image src="/bg-right-1.png" alt="Left" width={216} height={553} className="hidden lg:block absolute top-[480px] right-0 z-10" />
       <Header />
       <div className="relative z-50">

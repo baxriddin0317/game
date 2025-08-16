@@ -10,6 +10,11 @@ import { Dialog, DialogTrigger } from '../ui/dialog';
 import { AuthRequiredDialog, VoteSuccessDialog } from './CustomDiaolog';
 import { useAuthStore } from '@/contexts/AuthStore';
 import DateResponse from '../elements/DateResponse';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface props {
   topserver?: boolean;
@@ -58,9 +63,36 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
               {server.icons && server.icons.length > 0 && (
                 <>
                   {server.icons.map((icon) => {
-                    if (icon === "gift") return <LuGift key="gift" className="text-sm" />
-                    if (icon === "verified") return <HiOutlineCheckBadge key="verified" className="text-sm stroke-2" />
-                    if (icon === "donate") return <FaDollarSign key="donate" className="text-sm" />
+                    if (icon === "gift") return (
+                      <Tooltip key="gift">
+                        <TooltipTrigger asChild>
+                          <LuGift className="text-sm cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent side='bottom' className='bg-black text-white text-xs font-bold'>
+                          <p>Бонус старт</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )
+                    if (icon === "verified") return (
+                      <Tooltip key="verified">
+                        <TooltipTrigger asChild>
+                          <HiOutlineCheckBadge className="text-sm stroke-2 cursor-help" />
+                        </TooltipTrigger>
+                          <TooltipContent side='bottom' className='bg-black text-white text-xs font-bold'>
+                           <p>Подтвержденный сервер</p>
+                         </TooltipContent>
+                      </Tooltip>
+                    )
+                    if (icon === "donate") return (
+                      <Tooltip key="donate">
+                        <TooltipTrigger asChild>
+                          <FaDollarSign className="text-sm cursor-help" />
+                        </TooltipTrigger>
+                          <TooltipContent side='bottom' className='bg-black text-white text-xs font-bold'>
+                           <p>Платный сервер</p>
+                         </TooltipContent>
+                      </Tooltip>
+                    )
                     return null
                   })}
                 </>
