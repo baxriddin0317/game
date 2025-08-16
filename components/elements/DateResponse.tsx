@@ -3,9 +3,10 @@ import React from 'react'
 interface props {
   date: string;
   color?: boolean;
+  topserver?: boolean;
 }
 
-const DateResponse = ({date, color=false}: props) => {
+const DateResponse = ({date, color=false, topserver=false}: props) => {
   const getRelativeDateLabel = (dateString: string) => {
     const today = new Date();
     const targetDate = new Date(dateString);
@@ -45,13 +46,13 @@ const DateResponse = ({date, color=false}: props) => {
     if (relativeLabel === "Сегодня") {
       bgColor = "text-brand-green bg-white";
     } else if (relativeLabel === "Завтра") {
-      bgColor = "text-brand-btn";
+      bgColor = topserver ? "text-white" : "text-brand-btn";
     } else if (relativeLabel === "Вчера") {
       bgColor = "";
     }
     
     return (
-      <span className={`${bgColor} ${color ? '' : '!bg-transparent'} dark:bg-transparent px-2 py-1 rounded-full text-xs font-extrabold`}>
+      <span className={`${bgColor} ${color ? '' : '!bg-transparent'} dark:bg-transparent rounded-full text-xs font-extrabold`}>
         {relativeLabel}
       </span>
     );

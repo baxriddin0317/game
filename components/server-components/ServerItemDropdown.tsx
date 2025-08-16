@@ -47,27 +47,31 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
             </span>
           ) }
           </span>
-          <span className="overflow-hidden truncate text-ellipsis uppercase group-hover:underline group-focus:underline font-extrabold">
+          <span className="overflow-hidden text-sm md:text-base truncate text-ellipsis uppercase group-hover:underline group-focus:underline font-extrabold">
             {server.domain}
           </span>
           <div className="hidden flex-row items-center gap-1 text-orange-600 md:flex" />
         </div>
-        <div className='flex items-center !gap-1 md:!gap-2'>
-          <div className={`flex items-center gap-1.5 ${topserver ? 'text-[#f8b464]' : serverColor ? 'text-brand-btn' : 'text-brand-primary-3'}`}>
-            {server.icons && server.icons.length > 0 && (
-              <>
-                {server.icons.map((icon) => {
-                  if (icon === "gift") return <LuGift key="gift" className="text-sm" />
-                  if (icon === "verified") return <HiOutlineCheckBadge key="verified" className="text-sm stroke-2" />
-                  if (icon === "donate") return <FaDollarSign key="donate" className="text-sm" />
-                  return null
-                })}
-              </>
-            )}
+        <div className='flex flex-col lg:flex-row lg:items-center lg:!gap-2'>
+          <div className='flex items-center gap-1 justify-end'>
+            <div className={`flex items-center gap-1.5 ${topserver ? 'text-[#f8b464]' : serverColor ? 'text-brand-btn' : 'text-brand-primary-3'}`}>
+              {server.icons && server.icons.length > 0 && (
+                <>
+                  {server.icons.map((icon) => {
+                    if (icon === "gift") return <LuGift key="gift" className="text-sm" />
+                    if (icon === "verified") return <HiOutlineCheckBadge key="verified" className="text-sm stroke-2" />
+                    if (icon === "donate") return <FaDollarSign key="donate" className="text-sm" />
+                    return null
+                  })}
+                </>
+              )}
+            </div>
+            <div className="text-xs font-bold">{server.rate}</div>
           </div>
-          <div className="text-xs font-bold">{server.rate}</div>
-          <div className="text-xs text-nowrap font-bold">{server.chronicle}</div>
-          <DateResponse date={server.dateTime} color={true} />
+          <div className='flex items-center gap-2'>
+            <div className="text-xs text-nowrap font-bold">{server.chronicle}</div>
+            <DateResponse date={server.dateTime} color={true} topserver={topserver} />
+          </div>
         </div>
       </button>
       
