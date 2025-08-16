@@ -81,7 +81,7 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
           <div className="flex items-center justify-between">
             <div className="text-xs font-bold">
               <span className="block text-brand-primary-3 dark:text-white">
-                PvP • #1 в High Five
+              позиция в рейтинге #1
               </span>
               <span className="text-brand-btn">(378 голосов)</span>
             </div>
