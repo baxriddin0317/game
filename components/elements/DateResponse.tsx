@@ -28,10 +28,19 @@ const DateResponse = ({date, color=false}: props) => {
     }
   };
 
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+  
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2);
+  
+    return `${day}.${month}.${year}`;
+  }
+
   const relativeLabel = getRelativeDateLabel(date);
   
   if (relativeLabel) {
-    // Show colored badge for relative dates
     let bgColor = "";
     if (relativeLabel === "Сегодня") {
       bgColor = "text-brand-green bg-white";
@@ -47,10 +56,10 @@ const DateResponse = ({date, color=false}: props) => {
       </span>
     );
   } else {
-    // Show regular date in time tag
+    const formattedDate = formatDate(date)
     return (
       <time dateTime={date} className="text-xs font-bold">
-        {date}
+        {formattedDate}
       </time>
     );
   }
