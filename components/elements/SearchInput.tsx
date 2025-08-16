@@ -1,5 +1,6 @@
 "use client"
 import { SearchIcon } from '@/icons'
+import Head from 'next/head'
 import React, { useState, useEffect, useRef } from 'react'
 
 // Mock server data
@@ -91,12 +92,18 @@ const SearchInput = () => {
     }
   }, [])
   return (
-    <>
+    <div className='relative lg:static'>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </Head>
       {/* input */}
       <div className='bg-brand-primary-2 relative w-full h-12 overflow-hidden rounded-xl'>
         <input 
           ref={inputRef}
-          className='absolute w-full h-full outline-none text-white placeholder:text-[#848a99] text-sm tracking-[1px] pl-4 pr-12' 
+          className='absolute w-full h-full outline-none text-white placeholder:text-[#848a99] text-base tracking-[1px] pl-4 pr-12' 
           type='text' 
           placeholder='Поиск по серверам'
           value={searchValue}
@@ -146,7 +153,7 @@ const SearchInput = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   )
 }
 
