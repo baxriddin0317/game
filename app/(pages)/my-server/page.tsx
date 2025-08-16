@@ -47,6 +47,14 @@ const Servers = () => {
                       456789
                     </span>
                   </div>
+                  <div className="flex items-center justify-between gap-1 py-2">
+                    <span className="text-brand-header-light text-nowrap dark:text-brand-slate-gray text-sm font-medium">
+                      API KEY
+                    </span>
+                    <span className={`text-brand-primary dark:text-white font-bold truncate max-w-1/2`}>
+                      dchbdovlsdfjvblfbvlfdbvdfivbldfvblfdb
+                    </span>
+                  </div>
                   <div className="flex items-center justify-between py-2">
                     <span className="text-brand-header-light dark:text-brand-slate-gray text-sm font-medium">
                       Голоса
