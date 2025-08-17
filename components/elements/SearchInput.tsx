@@ -1,7 +1,7 @@
 "use client"
-import { SearchIcon } from '@/icons'
 import Head from 'next/head'
 import React, { useState, useEffect, useRef } from 'react'
+import { IoSearch } from 'react-icons/io5'
 
 // Mock server data
 const mockServers = [
@@ -110,7 +110,7 @@ const SearchInput = () => {
           onChange={(e) => handleSearchChange(e.target.value)}
         />
         <span className='block absolute top-1/2 right-4 -translate-y-1/2 z-10'>
-          <SearchIcon />
+          <IoSearch className='text-brand-btn text-xl' />
         </span>
       </div>
 
