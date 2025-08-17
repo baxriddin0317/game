@@ -10,6 +10,7 @@ import { FaPowerOff } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuthStore } from '@/contexts/AuthStore';
+import { useTranslation } from '@/contexts/LanguageContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +22,8 @@ import {
 
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuthStore();
+  const { t } = useTranslation();
+  
   return (
     <header className="relative z-20 mb-3.5">
       <nav className="flex w-full h-[65px] items-center justify-between pl-4 lg:pl-7 pr-2 rounded-3xl transition-colors duration-300 bg-brand-header-light dark:bg-brand-header-dark">
@@ -30,12 +33,12 @@ export default function Header() {
             <LogoShapeIcon />
           </div>
           <Link href={'/'} className='absolute text-3xl z-10 text-white font-extrabold uppercase -top-12 '>
-            <span>l2pick.</span>
-            <span className='text-brand-btn'>com</span>
+            <span>{t('l2pick')}</span>
+            <span className='text-brand-btn'>{t('com')}</span>
           </Link>
         </>
 
-        <h2 className='lg:text-[22px] leading-7 text-white font-bold'>Анонсы серверов Lineage 2</h2>
+        <h2 className='lg:text-[22px] leading-7 text-white font-bold'>{t('announcements')}</h2>
         {/* right */}
         <div className='hidden md:flex items-center md:gap-4 lg:gap-6'>
           <ThemeToggle />
@@ -47,8 +50,8 @@ export default function Header() {
                   <Image className='object-cover' src={user?.avatarUrl || '/avatar.png'} fill alt='avatar' />
                 </div>
                 <div>
-                  <h2 className='text-sm leading-[18px] text-white font-bold'>{user?.name || 'User'}</h2>
-                  <Link className='text-brand-btn text-sm leading-[18px] font-bold' href={'/profile'}>Личный кабинет</Link>
+                  <h2 className='text-sm leading-[18px] text-white font-bold'>{user?.name || t('user')}</h2>
+                  <Link className='text-brand-btn text-sm leading-[18px] font-bold' href={'/profile'}>{t('personal_cabinet')}</Link>
                 </div>
               </div>
               <button onClick={logout} className='flex items-center justify-center cursor-pointer size-7 bg-[#191c21] rounded-lg'>
@@ -68,7 +71,7 @@ export default function Header() {
               <CiMenuFries className='font-extrabold text-white text-3xl' />
             </DropdownMenuTrigger>
             <DropdownMenuContent className='bg-brand-main text-white border-none pb-4 space-y-2'>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{t('my_account')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 {isAuthenticated ? (
@@ -78,13 +81,13 @@ export default function Header() {
                         <Image className='object-cover' src={user?.avatarUrl || '/avatar.png'} fill alt='avatar' />
                       </div>
                       <div>
-                        <h2 className='text-sm leading-[18px] text-white font-bold'>{user?.name || 'User'}</h2>
-                        <Link className='text-brand-btn text-sm leading-[18px] font-bold' href={'/profile'}>Личный кабинет</Link>
+                        <h2 className='text-sm leading-[18px] text-white font-bold'>{user?.name || t('user')}</h2>
+                        <Link className='text-brand-btn text-sm leading-[18px] font-bold' href={'/profile'}>{t('personal_cabinet')}</Link>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <Link className='h-9 pl-2 bg-brand-btn flex items-center justify-center min-w-full rounded-lg' href={'/auth'}>Войти</Link>
+                  <Link className='h-9 pl-2 bg-brand-btn flex items-center justify-center min-w-full rounded-lg' href={'/auth'}>{t('login')}</Link>
                 )}
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

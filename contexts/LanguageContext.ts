@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-type Language = 'EN' | 'KZ' | 'RU' | 'CK';
+import { translations, type Language } from '@/lib/translations';
 
 interface LanguageState {
   currentLanguage: Language;
@@ -21,3 +20,14 @@ export const useLanguageStore = create<LanguageState>()(
     }
   )
 );
+
+// Hook for easy translation usage
+export const useTranslation = () => {
+  const { currentLanguage } = useLanguageStore();
+  
+  const t = (key: keyof typeof translations.RU) => {
+    return translations[currentLanguage][key] || translations.RU[key] || key;
+  };
+  
+  return { t, currentLanguage };
+};
