@@ -3,7 +3,7 @@
 import React from 'react';
 import { useLanguageStore } from '../../contexts/LanguageContext';
 
-type Language = 'EN' | 'KZ' | 'RU' | 'CK';
+type Language = 'EN' | 'RU';
 
 export default function LanguageSelector() {
   const { currentLanguage, setLanguage } = useLanguageStore();
