@@ -6,7 +6,7 @@ import { CalendarIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+
 import {
   Popover,
   PopoverContent,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select"
 import Image from 'next/image'
 import { IoImageOutline } from 'react-icons/io5'
+import { TbArrowBackUp } from "react-icons/tb";
 
 function formatDate(date: Date | undefined) {
   if (!date) return "";
@@ -52,20 +53,25 @@ interface FormErrors {
   [key: string]: string | undefined
 }
 
+interface props {
+  serverData?: Partial<FormData> | null;
+  onBack?: () => void;
+}
 
 
-const CreateServer = () => {
+
+const CreateServer = ({ serverData = null, onBack }: props) => {
   const [formData, setFormData] = useState<FormData>({
-    siteUrl: '',
-    openingDate: '09.10.2025',
-    announcementName: '',
-    ratingName: '',
-    serverType: 'PVE',
-    rates: '',
-    shortDescription: 'Мы вынуждены отталкиваться от того, что высококачественный прототип будущего проекта требует от нас анализа позиций, занимаемых участниками в отношении поставленных задач.',
-    fullDescription: '',
-    logo: null,
-    banner: null
+    siteUrl: serverData?.siteUrl || '',
+    openingDate: serverData?.openingDate || '09.10.2025',
+    announcementName: serverData?.announcementName || '',
+    ratingName: serverData?.ratingName || '',
+    serverType: serverData?.serverType || 'PVE',
+    rates: serverData?.rates || '',
+    shortDescription: serverData?.shortDescription || 'Мы вынуждены отталкиваться от того, что высококачественный прототип будущего проекта требует от нас анализа позиций, занимаемых участниками в отношении поставленных задач.',
+    fullDescription: serverData?.fullDescription || '',
+    logo: serverData?.logo || null,
+    banner: serverData?.banner || null
   })
 
   const [errors, setErrors] = useState<FormErrors>({})
@@ -171,6 +177,13 @@ const CreateServer = () => {
     <>
       <form onSubmit={handleSubmit}>
         {/* Server Information Section */}
+        <button
+          onClick={onBack}
+          className="flex items-center gap-1 text-gray-400 text-sm hover:opacity-90 transition-colors mb-4 pl-4 lg:pl-7"
+        >
+          <TbArrowBackUp />
+          Back
+        </button>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-brand-slate-gray/30 px-4 lg:px-7 pb-7">
           {/* Site URL */}
           <div>

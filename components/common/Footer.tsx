@@ -25,6 +25,8 @@ const infoLinks: NavItem[] = [
 
 const Footer = () => {
   const pathname = usePathname()
+  const isHome = pathname === '/';
+
 
   const linkClass = (href: string) => {
     const isActive = pathname === href
@@ -36,7 +38,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-brand-main dark:bg-brand-main-dark py-14 ">
-      <div className='max-w-[1364px] mx-auto flex flex-col-reverse md:flex-row items-start justify-between gap-10 md:gap-5 px-4 xl:px-2'>
+      <div className={`max-w-[1364px] ${isHome ? "xl:w-[90%]" : ""} mx-auto flex flex-col-reverse md:flex-row items-start justify-between gap-10 md:gap-5 px-4 xl:px-2`}>
         {/* left */}
         <div className='flex items-start justify-between md:justify-start gap-12 w-full md:w-fit lg:gap-[74px]'>
           <div>

@@ -109,7 +109,7 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
       
       {/* Accordion Content */}
       {isAccordionOpen && (
-        <div className={` absolute top-full -translate-y-2 left-0 right-0 mt-1 bg-[#faf3ef] dark:bg-brand-main-dark rounded-lg rounded-t-none z-50 border border-t-0 ${topserver ? 'border-brand-btn' : 'border-transparent'} transition duration-500 py-3 pl-4 pr-2`}>
+        <div className={` absolute top-full -translate-y-2 left-0 right-0 mt-1 bg-[#faf3ef] dark:bg-brand-main-dark rounded-lg rounded-t-none z-50 border border-t-0 border-brand-btn transition duration-500 py-3 pl-4 pr-2`}>
           <div className="flex items-center justify-between">
             <div className="text-xs font-bold">
               <span className="block text-brand-primary-3 dark:text-white">
@@ -134,8 +134,8 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
               <button onClick={() => route.push('/server-info')} className="px-3 h-8 bg-[#464b55] text-white text-xs font-bold rounded-md hover:bg-opacity-90 transition-colors">
               подробнее
               </button>
-              <button onClick={() => setIsFlag(!isflag)} className="size-8 flex items-center justify-center rounded-md bg-white dark:bg-transparent border border-brand-btn">
-                {!isflag ? <FlagIcon /> : <FaCheck className="text-sm text-brand-btn" />}
+              <button onClick={() => setIsFlag(!isflag)} className={`size-8 flex items-center justify-center rounded-md bg-white dark:bg-transparent border ${isflag ? "border-brand-green" : "border-brand-btn"}`}>
+                {!isflag ? <FlagIcon /> : <FaCheck className="text-sm text-brand-green" />}
               </button>
             </div>
           </div>
