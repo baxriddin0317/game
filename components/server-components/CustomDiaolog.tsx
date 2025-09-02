@@ -95,4 +95,36 @@ export const VoteSuccessDialog = ({handleClick}: {handleClick?: () => void}) => 
   )
 }
 
+export const VoteDialog = ({handleClick}: {handleClick?: () => void}) => {
+  return (
+    <DialogContent className='bg-transparent border-none p-0'>
+      <div className='flex items-center justify-center w-full relative bg-white min-h-[299px] border-none rounded-3xl shadow-2xl px-8'>
+      <div className="absolute left-1/2 -translate-x-1/2 top-2 w-[96%] h-full bg-white rounded-2xl -z-50"></div>
+        <DialogHeader className='flex flex-col items-center justify-center w-full'>
+          <DialogTitle>
+            Вы собираетесь проголосовать за сервер <Link className='text-brand-btn' href={'3'}>StackGO</Link>
+          </DialogTitle>
+          <div className='text-center w-full mt-7 space-y-3'>
+            <DialogDescription className='sr-only'></DialogDescription>
+            <div className='flex items-center justify-between w-full h-11 px-5 rounded-xl border border-[#d7dfe4] dark:border-[#21252f] bg-brand-gray-3 dark:bg-brand-dark text-sm text-[#26292f] dark:text-white font-medium'>
+              <p>Ваш IP адрес</p>
+              <p>192.168.0.0</p>
+            </div>
+            <div className='flex items-center justify-between w-full h-11 px-5 rounded-xl border border-[#d7dfe4] dark:border-[#21252f] bg-brand-gray-3 dark:bg-brand-dark text-sm text-[#26292f] dark:text-white font-medium'>
+              <p>Ваш E-mail</p>
+              <p>google@google.com</p>
+            </div>
+          </div>
+          <div className='w-full flex items-center justify-center mt-5'>
+            <MainButton onClick={handleClick} className='w-full !max-w-full text-sm font-extrabold leading-4 relative z-10 before:absolute before:size-full before:bg-brand-btn before:top-0 before:left-px before:blur-md before:opacity-60 before:-z-10'>
+              <FaThumbsUp className="mr-2" />
+              ПРОГОЛОСОВАТЬ ЗА STACKGO
+            </MainButton>
+          </div>
+        </DialogHeader>
+      </div>
+    </DialogContent>
+  )
+}
+
 export default CustomDiaolog

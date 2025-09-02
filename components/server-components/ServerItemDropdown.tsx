@@ -7,7 +7,7 @@ import { HiOutlineCheckBadge } from "react-icons/hi2";
 import { useRouter } from 'next/navigation';
 import type { ServerItem } from '@/lib/mockServers';
 import { Dialog, DialogTrigger } from '../ui/dialog';
-import { AuthRequiredDialog, VoteSuccessDialog } from './CustomDiaolog';
+import { AuthRequiredDialog, VoteDialog, VoteSuccessDialog } from './CustomDiaolog';
 import { useAuthStore } from '@/contexts/AuthStore';
 import DateResponse from '../elements/DateResponse';
 import {
@@ -24,6 +24,7 @@ interface props {
 
 const ServerItemDropdown = ({topserver = false, server, serverColor = false} : props) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [isSucces, setIsSucces] = useState(false);
   const [isflag,setIsFlag] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
   const route = useRouter();
@@ -129,7 +130,7 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
                 <DialogTrigger  className=' bg-brand-btn cursor-pointer hover:bg-brand-btn/90 text-white rounded-lg px-4 h-8 flex items-center justify-center gap-2 text-xs font-medium transition-colors relative z-10 before:absolute before:size-full before:bg-brand-btn before:top-0 before:left-px before:blur-md before:opacity-60 before:-z-10'>
                   ПРОГОЛОСОВАТЬ
                 </DialogTrigger>
-                {isAuthenticated ? <VoteSuccessDialog handleClick={handleVote} /> : <AuthRequiredDialog />}
+                {isAuthenticated ? !isSucces ? <VoteDialog handleClick={() => setIsSucces(true)} /> : <VoteSuccessDialog handleClick={handleVote} /> : <AuthRequiredDialog />}
               </Dialog>}
               <button onClick={() => route.push('/server-info')} className="px-3 h-8 bg-[#464b55] text-white text-xs font-bold rounded-md hover:bg-opacity-90 transition-colors">
               подробнее
