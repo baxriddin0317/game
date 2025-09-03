@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FaDiscord, FaTelegramPlane, FaTwitch, FaYoutube } from 'react-icons/fa'
+import { useRouteStore } from '@/contexts/RouteStore'
 
 type NavItem = { label: string; href: string }
 
@@ -24,9 +25,15 @@ const infoLinks: NavItem[] = [
 ]
 
 const Footer = () => {
+  const { setPathname } = useRouteStore()
   const pathname = usePathname()
-  const isHome = pathname === '/';
+  
+  // Update global store when pathname changes
+  React.useEffect(() => {
+    setPathname(pathname)
+  }, [pathname, setPathname])
 
+  const { isHome } = useRouteStore()
 
   const linkClass = (href: string) => {
     const isActive = pathname === href

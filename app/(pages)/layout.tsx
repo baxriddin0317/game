@@ -3,14 +3,23 @@ import Header from "@/components/common/Header";
 import Info from "@/components/common/Info";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useRouteStore } from '@/contexts/RouteStore'
+import React from "react";
 
-export default function MainLayout({
+export default function Layout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
+  const { setPathname } = useRouteStore()
   const pathname = usePathname()
-  const isHome = pathname === '/';
+  
+  // Update global store when pathname changes
+  React.useEffect(() => {
+    setPathname(pathname)
+  }, [pathname, setPathname])
+
+  const { isHome } = useRouteStore()
   return (
     <main className="max-w-[1456px] mx-auto px-1 sm:px-4 xl:px-2 pt-32 md:pt-52 lg:pt-64">
       <Image src="/bg-right-1.png" alt="Left" width={216} height={553} className="hidden lg:block absolute top-[480px] right-0 z-10" />

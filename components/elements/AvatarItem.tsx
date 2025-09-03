@@ -17,7 +17,7 @@ const AvatarItem = () => {
           <p className='text-xs text-[#5e6a76] dark:text-brand-slate-gray'>IP: <span className='font-bold text-brand-primary dark:text-white'>192.168.50.3</span></p>
         </div>
       </div>
-      <MainButton className='!max-w-[170px] w-full text-nowrap rounded-xl gap-2 !px-0 !text-xs font-bold !max-h-11 flex-1' icon={<DownloadIcon />}>Загрузить аватар</MainButton>
+      <MainButton className='!max-w-[170px] w-full text-nowrap rounded-xl gap-2 !text-xs font-bold !max-h-11 flex-1 !px-2' icon={<DownloadIcon />}>Загрузить аватар</MainButton>
     </div>
   )
 }
