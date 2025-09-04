@@ -162,7 +162,7 @@ const ServerCard: React.FC<ServerCardProps> = ({
       </div>
 
       {/* Desktop Layout */}
-      <div className='hidden xl:flex items-center gap-2.5 mt-3'>
+      <div className='hidden xl:flex items-center flex-wrap gap-2.5 mt-3'>
         <div className='flex-1 flex items-center justify-between w-full h-10 rounded-lg bg-white dark:bg-[#2a2e3a] border border-[#e6e9ec] dark:border-[#2a2e3a]'>
           <div className='flex items-center pl-4'>
             {renderStars({ rating })}
@@ -183,14 +183,14 @@ const ServerCard: React.FC<ServerCardProps> = ({
                   <span className="text-sm font-extrabold leading-4 text-white px-3.5">10:57:40</span>
                   <div className="flex items-center gap-2 text-white bg-brand-primary h-full rounded-lg px-4">
                     <FaCheck className="text-sm text-brand-btn" />
-                    <span className="text-xs leading-4 font-extrabold">ГОЛОС УЧТЁН</span>
+                    <span className="text-xs leading-4 font-extrabold whitespace-nowrap">ГОЛОС УЧТЁН</span>
                   </div>
                 </div>
               ) : (
                 <CustomDiaolog handleClick={handleVote} />
               )}
             </div>
-            <Link href={'/server-info'} className='flex items-center text-xs font-extrabold hover:opacity-90 px-3 text-brand-btn' >
+            <Link href={'/server-info'} className='flex items-center whitespace-nowrap text-xs font-extrabold hover:opacity-90 px-3 text-brand-btn' >
               ПЕРЕЙТИ НА САЙТ ›
             </Link>
           </div>

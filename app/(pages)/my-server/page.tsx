@@ -13,15 +13,15 @@ const Servers = () => {
       <div className='flex items-stretch min-h-screen'>
         <MenuSidebar /> 
         <div className='w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl lg:rounded-l-none'>
-          <div className='grid grid-cols-2 xl:grid-cols-3 items-start xl:h-full'>
-            <div className='order-2 col-span-2 border-t xl:border-t-0 xl:border-r border-brand-slate-gray/30 h-full py-7'>
+          <div className='grid grid-cols-2 xl:grid-cols-5 items-start xl:h-full'>
+            <div className='order-2 col-span-2 xl:col-span-3 border-t xl:border-t-0 xl:border-r border-brand-slate-gray/30 h-full py-7'>
               <h2 className='font-bold text-brand-primary dark:text-white mb-1 px-4 lg:px-7'>
               Добавление сервера
               </h2>
 
               <ServerActions />
             </div>
-            <div className='order-1 xl:order-3 col-span-2 xl:col-span-1 py-7 px-4 md:p-7 min-w-[250px] w-full'>
+            <div className='order-1 xl:order-3 col-span-2 xl:col-span-2 py-7 px-4 md:p-7 min-w-[250px] w-full'>
               <div className='bg-brand-gray-3 dark:bg-[#20242c] rounded-2xl p-5 space-y-4'>
                 <div className='flex items-center gap-2'>
                   <div className='size-8 rounded-full overflow-hidden relative'>
