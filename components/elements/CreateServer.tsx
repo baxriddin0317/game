@@ -40,6 +40,7 @@ interface FormData {
   announcementName: string
   ratingName: string
   serverType: string
+  assemblyType: string
   rates: string
   shortDescription: string
   fullDescription: string
@@ -67,6 +68,7 @@ const CreateServer = ({ serverData = null, onBack }: props) => {
     announcementName: serverData?.announcementName || '',
     ratingName: serverData?.ratingName || '',
     serverType: serverData?.serverType || 'PVE',
+    assemblyType: serverData?.serverType || 'PVE',
     rates: serverData?.rates || '',
     shortDescription: serverData?.shortDescription || 'Мы вынуждены отталкиваться от того, что высококачественный прототип будущего проекта требует от нас анализа позиций, занимаемых участниками в отношении поставленных задач.',
     fullDescription: serverData?.fullDescription || '',
@@ -339,8 +341,33 @@ const CreateServer = ({ serverData = null, onBack }: props) => {
             )}
           </div>
 
+           {/* Тип сборки */}
+           <div>
+            <label className="block text-xs font-bold text-brand-primary dark:text-white mb-2.5">
+            Тип сборки
+            </label>
+            {/* onChange={(e) => handleInputChange('serverType', e.target.value)} */}
+            <Select onValueChange={(value) => handleInputChange('assemblyType', value)}>
+              <SelectTrigger  className={`w-full !h-11 px-4 rounded-xl border ${
+                errors.serverType
+                  ? 'border-brand-danger'
+                  : 'border-[#d7dfe4] dark:border-[#21252f] bg-white shadow-2xl dark:bg-brand-dark'
+              } text-xs text-brand-primary dark:text-white font-medium !outline-none`}>
+                <SelectValue className='placeholder:!text-brand-secondary dark:placeholder:text-[#535967]' placeholder="select" />
+              </SelectTrigger>
+              <SelectContent className='bg-white dark:bg-brand-primary dark:text-white !text-xs font-bold border-[#d7dfe4] dark:border-[#21252f]'>
+                {serverTypes.map((type,idx) => (
+                  <SelectItem key={idx} value={type}>{type}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.serverType && (
+              <p className="text-brand-danger text-xs text-right font-medium mt-1.5">{errors.serverType}</p>
+            )}
+          </div>
+
           {/* Rates */}
-          <div>
+          <div className='col-span-2'>
             <label className="block text-xs font-bold text-brand-primary dark:text-white mb-2.5">
               Рейты
             </label>
