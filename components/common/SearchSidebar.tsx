@@ -66,7 +66,7 @@ export const servers = [
 const SearchSidebar = () => {
 
   return (
-    <aside className='hidden bg-brand-main lg:flex flex-col w-[352px] rounded-2xl rounded-r-none py-5'>
+    <aside className='hidden bg-brand-main lg:flex flex-col w-[316px] rounded-2xl rounded-r-none py-5'>
       <FilterContent />
     </aside>
   )
@@ -86,7 +86,7 @@ export const FilterContent = () => (
         <CustomSelect title="Все рейты" options={selectOptions} />
         <CustomSelect title="Все хроники" options={selectOptions2} />
 
-        <MainButton className="col-span-2 tracking-[1px] !h-12">
+        <MainButton className="col-span-2 tracking-[1px] !h-12 !px-0">
           ПОДОБРАТЬ СЕРВЕР
         </MainButton>
       </div>

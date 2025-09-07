@@ -12,7 +12,7 @@ export default function Layout({
   return (
     <main className="max-w-[1456px] mx-auto px-1 sm:px-4 xl:px-2 pt-32 md:pt-52 lg:pt-64">
       <Image src="/bg-right-1.png" alt="Left" width={216} height={553} className="hidden lg:block absolute top-[480px] right-0 z-10" />
-        <div className={`xl:w-[90%] mx-auto`}>
+        <div className={`xl:w-[94%] mx-auto`}>
           <Header />
           <div className="relative z-50">
             <Image src="/bg-left-1.png" alt="Left" width={123} height={354} className="hidden lg:block absolute top-40 -left-10 -z-10" />
