@@ -78,7 +78,7 @@ export default function ServersSection() {
         <Section title="Сегодня" subtitle="(26.07.2021 - Пятница)" servers={todayServers} />
         <Section title="Завтра" subtitle="(26.07.2021 - Пятница)" servers={tomorrowServers} />
       </div>
-      <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-y-5 gap-x-3.5 ">
+      <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-3.5 ">
         <Section 
           icon={<MdAccessTime className="text-brand-primary-3 dark:text-brand-btn" />}
           title="Скоро откроются"

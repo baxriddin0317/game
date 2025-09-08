@@ -58,7 +58,7 @@ const ServerItemDropdown = ({topserver = false, server, serverColor = false} : p
           </span>
           <div className="hidden flex-row items-center gap-1 text-orange-600 md:flex" />
         </div>
-        <div className='flex flex-col lg:flex-row lg:items-center lg:!gap-2'>
+        <div className='flex flex-col 2xl:flex-row 2xl:items-center lg:!gap-2'>
           <div className='flex items-center gap-1 justify-end'>
             <div className={`flex items-center gap-1.5 ${topserver ? 'text-[#f8b464]' : serverColor ? 'text-brand-btn' : 'text-brand-primary-3'}`}>
               {server.icons && server.icons.length > 0 && (
