@@ -12,7 +12,6 @@ const TopServers = () => {
   const { data: topServers, isLoading, error } = useTop5Servers();
   const { t } = useTranslation();
 
-  // Register this component's loading state with the global loader
   useRegisterLoader(isLoading, "top-servers-page");
 
   if (error) {
