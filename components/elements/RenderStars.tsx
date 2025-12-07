@@ -8,13 +8,14 @@ interface RenderStarsProps {
   size?: string
 }
 
-export const renderStars = ({ 
+export const RenderStars = ({ 
   rating, 
   filledColor = "text-brand-btn", 
   halfColor = "text-brand-btn", 
   emptyColor = "text-gray-300",
   size = "w-4 h-4"
 }: RenderStarsProps) => {
+  const uniqueId = useId()
   const stars = []
   const fullStars = Math.floor(rating)
   const hasHalfStar = rating % 1 !== 0
@@ -28,7 +29,6 @@ export const renderStars = ({
   }
 
   if (hasHalfStar) {
-    const uniqueId = useId()
     stars.push(
       <svg key="half" className={`${size} ${halfColor}`} fill="currentColor" viewBox="0 0 20 20">
         <defs>
@@ -51,5 +51,8 @@ export const renderStars = ({
     )
   }
 
-  return stars
+  return <>{stars}</>
 }
+
+// Keep the old function name for backward compatibility
+export const renderStars = (props: RenderStarsProps) => <RenderStars {...props} />

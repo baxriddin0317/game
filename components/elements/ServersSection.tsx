@@ -1,10 +1,14 @@
-
+"use client";
 import { IoRocketSharp } from "react-icons/io5";
 import { MdAccessTime } from "react-icons/md";
 import ServerItemDropdown from "../server-components/ServerItemDropdown";
-import type { ServerItem } from "@/lib/mockServers";
-import { openedServers, soonServers, todayServers, tomorrowServers } from "@/lib/mockServers";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useGroupedServers } from "@/lib/queries/useServers";
+import { ServerResponse } from "@/lib/types/server";
+import { useFilter } from "@/contexts/FilterContext";
+import { useTranslation } from "@/contexts/LanguageContext";
+import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
+import { useEffect, useState } from "react";
 
 function Section({
   title,
@@ -17,8 +21,15 @@ function Section({
   subtitle?: string;
   icon?: React.ReactNode;
   vip?: boolean;
-  servers?: ServerItem[];
+  servers?: ServerResponse;
 }) {
+  const { t } = useTranslation();
+  const [openAccordionId, setOpenAccordionId] = useState<number | null>(null);
+
+  const handleToggle = (serverId: number) => {
+    setOpenAccordionId((prev) => (prev === serverId ? null : serverId));
+  };
+
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between gap-3 mb-3">
@@ -32,16 +43,18 @@ function Section({
         </h3>
         {vip && (
           <span className="bg-brand-gray-2 dark:bg-[#13151d] font-exo2 text-sm text-nowrap flex items-center justify-center h-8 text-brand-btn font-extrabold px-3 rounded-md ">
-            VIP сервера
+            {t("servers_section_vip")}
           </span>
         )}
       </div>
       <div className="flex flex-col gap-2">
-        {servers?.map((server) => (
-          <ServerItemDropdown key={server.id}
-            topserver={Boolean(server.topserver)}
-            serverColor={Boolean(server.serverColor)}
+        {servers?.data?.map((server, index) => (
+          <ServerItemDropdown
+            key={server.id}
+            topserver={index === 0}
             server={server}
+            isOpen={openAccordionId === server.id}
+            onToggle={() => handleToggle(server.id)}
           />
         ))}
       </div>
@@ -50,49 +63,109 @@ function Section({
 }
 
 export default function ServersSection() {
+  const { t, currentLanguage } = useTranslation();
+  const { filters } = useFilter();
+
+  const { data: groupedData, isLoading } = useGroupedServers({
+    ...(filters.selectedRate && { rate: filters.selectedRate }),
+    ...(filters.selectedChronicle && {
+      chronicle_id: filters.selectedChronicle,
+    }),
+  });
+
+  // Register this component's loading state with the global loader
+  useRegisterLoader(isLoading, "servers-section");
+
+  const convertToServerResponse = (
+    servers: any[] | undefined,
+  ): ServerResponse => ({
+    data: servers || [],
+  });
+
+  // Helper function to format date and day
+  const formatDateWithDay = (date: Date, locale: string) => {
+    const day = date.toLocaleDateString(locale, { weekday: "long" });
+    const capitalizedDay = day.charAt(0).toUpperCase() + day.slice(1);
+    const formattedDate = date.toLocaleDateString(locale, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    return `(${formattedDate} - ${capitalizedDay})`;
+  };
+
+  const locale = currentLanguage === "RU" ? "ru-RU" : "en-US";
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const todaySubtitle = formatDateWithDay(today, locale);
+  const tomorrowSubtitle = formatDateWithDay(tomorrow, locale);
+  const yesterdaySubtitle = formatDateWithDay(yesterday, locale);
+
+  const soonServers = convertToServerResponse(groupedData?.data?.coming_soon);
+  const openedServersData = convertToServerResponse(groupedData?.data?.opened);
+  const todayServersData = convertToServerResponse(groupedData?.data?.today);
+  const tomorrowServersData = convertToServerResponse(
+    groupedData?.data?.tomorrow,
+  );
+  const yesterdayServersData = convertToServerResponse(
+    groupedData?.data?.yesterday,
+  );
+
+  // Check if sections have servers
+  const hasSoonServers = soonServers?.data && soonServers.data.length > 0;
+  const hasOpenedServers = openedServersData?.data && openedServersData.data.length > 0;
+  const hasTodayServers = todayServersData?.data && todayServersData.data.length > 0;
+  const hasTomorrowServers = tomorrowServersData?.data && tomorrowServersData.data.length > 0;
+  const hasYesterdayServers = yesterdayServersData?.data && yesterdayServersData.data.length > 0;
+
   return (
     <>
-      <Tabs defaultValue="soon" className="md:hidden w-full">
-        <TabsContent value="soon">
-          <Section 
-            icon={<MdAccessTime className="text-brand-primary-3 dark:text-brand-btn" />}
-            title="Скоро откроются"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-5.5 ">
+        {hasSoonServers && (
+          <Section
+            icon={
+              <MdAccessTime className="text-brand-primary-3 dark:text-brand-btn" />
+            }
+            title={t("servers_section_coming_soon")}
             vip={true}
             servers={soonServers}
           />
-        </TabsContent>
-        <TabsContent value="opened">
+        )}
+        {hasOpenedServers && (
           <Section
-            icon={<IoRocketSharp className="text-brand-primary-3 dark:text-brand-btn" />}
-            title="Уже открылись"
+            icon={
+              <IoRocketSharp className="text-brand-primary-3 dark:text-brand-btn" />
+            }
+            title={t("servers_section_already_opened")}
             vip={true}
-            servers={openedServers}
+            servers={openedServersData}
           />
-        </TabsContent>
-        <TabsList className='bg-white dark:bg-brand-primary-3 h-14 grid grid-cols-2 fixed z-50 bottom-0 left-0 justify-start flex-wrap gap-3 w-full'>
-          <TabsTrigger className='data-[state=active]:bg-brand-gray-2 dark:data-[state=active]:bg-brand-btn-gray-3 data-[state=active]:text-brand-btn h-9 rounded-lg !shadow-none cursor-pointer font-bold dark:text-white' value="soon">Открытие скоро</TabsTrigger>
-          <TabsTrigger className='data-[state=active]:bg-brand-gray-2 dark:data-[state=active]:bg-brand-btn-gray-3 data-[state=active]:text-brand-btn h-9 rounded-lg !shadow-none cursor-pointer font-bold dark:text-white' value="opened">Уже открытые</TabsTrigger>
-        </TabsList>
-      </Tabs>
-      <div className="grid md:hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-y-5 gap-x-3.5 ">
-        <Section title="Сегодня" subtitle="(26.07.2021 - Пятница)" servers={todayServers} />
-        <Section title="Завтра" subtitle="(26.07.2021 - Пятница)" servers={tomorrowServers} />
-      </div>
-      <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-3.5 ">
-        <Section 
-          icon={<MdAccessTime className="text-brand-primary-3 dark:text-brand-btn" />}
-          title="Скоро откроются"
-          vip={true}
-          servers={soonServers}
-        />
-        <Section
-          icon={<IoRocketSharp className="text-brand-primary-3 dark:text-brand-btn" />}
-          title="Уже открылись"
-          vip={true}
-          servers={openedServers}
-        />
-        <Section title="Сегодня" subtitle="(26.07.2021 - Пятница)" servers={todayServers} />
-        <Section title="Завтра" subtitle="(26.07.2021 - Пятница)" servers={tomorrowServers} />
+        )}
+        {hasTodayServers && (
+          <Section
+            title={t("servers_section_today")}
+            subtitle={todaySubtitle}
+            servers={todayServersData}
+          />
+        )}
+        {hasTomorrowServers && (
+          <Section
+            title={t("servers_section_tomorrow")}
+            subtitle={tomorrowSubtitle}
+            servers={tomorrowServersData}
+          />
+        )}
+        {hasYesterdayServers && (
+          <Section
+            title={t("servers_section_yesterday")}
+            subtitle={yesterdaySubtitle}
+            servers={yesterdayServersData}
+          />
+        )}
       </div>
     </>
   );
