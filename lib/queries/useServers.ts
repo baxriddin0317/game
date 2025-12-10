@@ -14,7 +14,11 @@ type ServerStatus =
   | "today"
   | "tomorrow"
   | "yesterday"
-  | "opened";
+  | "opened"
+  | "next_seven_days"
+  | "previous_seven_days"
+  | "next_week_and_later"
+  | "last_week_and_earlier";
 type ServerSort = "votes" | "rating" | "launch date";
 type SortOrder = "asc" | "desc";
 
@@ -27,6 +31,7 @@ type GetServersParams = {
   sort?: ServerSort;
   order?: SortOrder;
   per_page?: number;
+  page?: number;
 };
 
 const getServers = async (

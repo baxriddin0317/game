@@ -44,6 +44,10 @@ export type GroupedServersResponse = {
     today: Server[];
     yesterday: Server[];
     opened: Server[];
+    next_seven_days?: Server[];
+    previous_seven_days?: Server[];
+    next_week_and_later?: Server[];
+    last_week_and_earlier?: Server[];
   };
 };
 

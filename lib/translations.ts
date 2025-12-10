@@ -238,7 +238,7 @@ export const translations = {
     create_server_delete: "Удалить",
     create_server_logo_preview: "Logo preview",
     create_server_banner: "Баннер",
-    create_server_banner_specs: "36x36 до 50к6 JPG, PNG, GIF",
+    create_server_banner_specs: "649×266 до 50к6 JPG, PNG, GIF",
     create_server_banner_preview: "Banner preview",
     create_server_creating: "Создание сервера...",
     create_server_create: "Создать сервер",
@@ -285,6 +285,10 @@ export const translations = {
     servers_section_yesterday: "Вчера",
     servers_section_coming_soon: "Скоро откроются",
     servers_section_already_opened: "Уже открылись",
+    servers_section_next_seven_days: "Ближайшие 7 дней",
+    servers_section_previous_seven_days: "Предыдущие 7 дней",
+    servers_section_next_week_later: "Через неделю и позже",
+    servers_section_last_week_earlier: "Неделю назад и ранее",
     servers_section_vip: "VIP сервера",
 
     // Telegram Login
@@ -595,7 +599,7 @@ export const translations = {
     create_server_delete: "Delete",
     create_server_logo_preview: "Logo preview",
     create_server_banner: "Banner",
-    create_server_banner_specs: "36x36 up to 50KB JPG, PNG, GIF",
+    create_server_banner_specs: "649×266 up to 50KB JPG, PNG, GIF",
     create_server_banner_preview: "Banner preview",
     create_server_creating: "Creating server...",
     create_server_create: "Create Server",
@@ -642,6 +646,10 @@ export const translations = {
     servers_section_yesterday: "Yesterday",
     servers_section_coming_soon: "Coming Soon",
     servers_section_already_opened: "Already Opened",
+    servers_section_next_seven_days: "Next 7 Days",
+    servers_section_previous_seven_days: "Previous 7 Days",
+    servers_section_next_week_later: "Next Week and Later",
+    servers_section_last_week_earlier: "Last Week and Earlier",
     servers_section_vip: "VIP Servers",
 
     // Telegram Login

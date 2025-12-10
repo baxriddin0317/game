@@ -92,7 +92,7 @@ const ServerCard: React.FC<ServerCardProps> = ({
       </div>
 
       <div className="flex flex-col-reverse sm:flex-row items-start justify-between gap-3 sm:gap-1">
-        <div className="flex flex-col md:flex-row justify-center flex-1 items-stretch gap-4">
+        <div className="flex flex-col w-full md:flex-row justify-center flex-1 items-stretch gap-4">
           {/* Thumbnail Image */}
           <div className="relative w-[148px] mx-auto sm:mx-0 h-[98px] rounded-xl overflow-hidden flex-shrink-0 bg-gray-200 dark:bg-gray-700">
             {image ? (
@@ -156,6 +156,12 @@ const ServerCard: React.FC<ServerCardProps> = ({
               {t("server_card_votes")}{" "}
               <span className="text-brand-btn">{votes.toLocaleString()}</span>
             </span>
+            <div className="flex items-center gap-1.5 pl-3">
+              <CommentIcon />
+              <span className="text-xs text-brand-btn font-extrabold">
+                {comments.toLocaleString()}
+              </span>
+            </div>
           </div>
         </div>
 

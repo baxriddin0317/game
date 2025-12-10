@@ -2,13 +2,12 @@
 import { IoRocketSharp } from "react-icons/io5";
 import { MdAccessTime } from "react-icons/md";
 import ServerItemDropdown from "../server-components/ServerItemDropdown";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGroupedServers } from "@/lib/queries/useServers";
 import { ServerResponse } from "@/lib/types/server";
 import { useFilter } from "@/contexts/FilterContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Section({
   title,
@@ -114,6 +113,18 @@ export default function ServersSection() {
   const yesterdayServersData = convertToServerResponse(
     groupedData?.data?.yesterday,
   );
+  const nextSevenDaysServersData = convertToServerResponse(
+    groupedData?.data?.next_seven_days,
+  );
+  const previousSevenDaysServersData = convertToServerResponse(
+    groupedData?.data?.previous_seven_days,
+  );
+  const nextWeekAndLaterServersData = convertToServerResponse(
+    groupedData?.data?.next_week_and_later,
+  );
+  const lastWeekAndEarlierServersData = convertToServerResponse(
+    groupedData?.data?.last_week_and_earlier,
+  );
 
   // Check if sections have servers
   const hasSoonServers = soonServers?.data && soonServers.data.length > 0;
@@ -121,6 +132,17 @@ export default function ServersSection() {
   const hasTodayServers = todayServersData?.data && todayServersData.data.length > 0;
   const hasTomorrowServers = tomorrowServersData?.data && tomorrowServersData.data.length > 0;
   const hasYesterdayServers = yesterdayServersData?.data && yesterdayServersData.data.length > 0;
+  const hasNextSevenDaysServers =
+    nextSevenDaysServersData?.data && nextSevenDaysServersData.data.length > 0;
+  const hasPreviousSevenDaysServers =
+    previousSevenDaysServersData?.data &&
+    previousSevenDaysServersData.data.length > 0;
+  const hasNextWeekAndLaterServers =
+    nextWeekAndLaterServersData?.data &&
+    nextWeekAndLaterServersData.data.length > 0;
+  const hasLastWeekAndEarlierServers =
+    lastWeekAndEarlierServersData?.data &&
+    lastWeekAndEarlierServersData.data.length > 0;
 
   return (
     <>
@@ -152,6 +174,18 @@ export default function ServersSection() {
             servers={todayServersData}
           />
         )}
+        {hasNextSevenDaysServers && (
+          <Section
+            title={t("servers_section_next_seven_days")}
+            servers={nextSevenDaysServersData}
+          />
+        )}
+        {hasNextWeekAndLaterServers && (
+          <Section
+            title={t("servers_section_next_week_later")}
+            servers={nextWeekAndLaterServersData}
+          />
+        )}
         {hasTomorrowServers && (
           <Section
             title={t("servers_section_tomorrow")}
@@ -164,6 +198,18 @@ export default function ServersSection() {
             title={t("servers_section_yesterday")}
             subtitle={yesterdaySubtitle}
             servers={yesterdayServersData}
+          />
+        )}
+        {hasPreviousSevenDaysServers && (
+          <Section
+            title={t("servers_section_previous_seven_days")}
+            servers={previousSevenDaysServersData}
+          />
+        )}
+        {hasLastWeekAndEarlierServers && (
+          <Section
+            title={t("servers_section_last_week_earlier")}
+            servers={lastWeekAndEarlierServersData}
           />
         )}
       </div>

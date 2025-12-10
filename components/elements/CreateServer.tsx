@@ -833,7 +833,7 @@ const CreateServer = ({ serverData = null, onBack }: props) => {
               </div>
             </div>
           </div>
-          <div className="w-full h-72 sm:h-[332px] overflow-hidden relative rounded-2xl border border-[#e8ebf1] dark:border-[#313541] bg-transparent flex items-center justify-center">
+          <div className="w-full aspect-[649/266] h-[266px] overflow-hidden relative rounded-2xl border border-[#e8ebf1] dark:border-[#313541] bg-transparent flex items-center justify-center">
             {bannerPreview ? (
               <Image
                 src={bannerPreview}

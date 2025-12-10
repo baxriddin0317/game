@@ -190,7 +190,7 @@ const ServerItemDropdown = ({
                   </Tooltip>
                 ))}
             </div>
-            <div className="text-xs font-bold">x{server.rate}</div>
+            <div className="text-xs font-bold">{server.rate}</div>
           </div>
           <div className="flex items-center gap-2">
             <div className="text-xs text-nowrap font-bold">

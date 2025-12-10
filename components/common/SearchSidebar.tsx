@@ -14,6 +14,7 @@ import { useServers, useTop5Servers } from "@/lib/queries/useServers";
 import { useFilter } from "@/contexts/FilterContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
+import { FaRegThumbsUp } from "react-icons/fa";
 
 const SearchSidebar = () => {
   return (
@@ -21,6 +22,15 @@ const SearchSidebar = () => {
       <FilterContent />
     </aside>
   );
+};
+
+const formatVotes = (votes: number) => {
+  if (votes >= 1000) {
+    const abbreviated = Math.floor(votes / 1000);
+    return `${Math.min(abbreviated, 999)}k`;
+  }
+
+  return Math.min(votes, 999).toString();
 };
 
 export const FilterContent = () => {
@@ -122,9 +132,10 @@ console.log(advertisementsBackground);
                     </span>
                   </div>
 
-                  {/* <span className="text-sm text-brand-orange font-semibold z-20">
-                    {server.price}
-                  </span> */}
+                  <span className="flex items-center gap-1 text-sm text-brand-orange font-semibold z-20">
+                    {formatVotes(server.weighted_votes)}
+                    <FaRegThumbsUp className="mb-1" />
+                  </span>
                   {index === 0 && (
                     <>
                       <div className="absolute size-full left-0 bg-[linear-gradient(135deg,#b8573c,#ac543c,#874c3e,#594140,#4f3f40)] opacity-80 z-10"></div>
