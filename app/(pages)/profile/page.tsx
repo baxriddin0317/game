@@ -13,6 +13,7 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuthStore } from "@/contexts/AuthStore";
 import { useRouter } from "next/navigation";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
+import axios from "axios";
 
 // Utility function to format date from ISO string to DD.MM.YYYY
 const formatDate = (isoString: string): string => {
@@ -27,8 +28,9 @@ const Profile = () => {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const hasAuthHydrated = useAuthStore((state) => state._hasHydrated);
+  const logout = useAuthStore((state) => state.logout);
   const { data: user, isLoading, error } = useGetUser();
-  const { data: votes, isLoading: votesLoading } = useGetUserVotes();
+  const { data: votes, isLoading: votesLoading, error: votesError } = useGetUserVotes();
   const changePasswordMutation = useChangeUserPassword();
   const { t } = useTranslation();
 
@@ -50,6 +52,28 @@ const Profile = () => {
       router.push("/auth");
     }
   }, [isAuthenticated, hasAuthHydrated, router]);
+
+  // Handle unauthorized errors (401) - redirect to login
+  useEffect(() => {
+    const checkUnauthorizedError = (err: unknown) => {
+      if (!err) return false;
+      
+      return (
+        axios.isAxiosError(err) &&
+        (err.response?.status === 401 ||
+          err.response?.status === 403 ||
+          err.message?.includes("401") ||
+          err.message?.includes("Unauthorized"))
+      );
+    };
+
+    // Check both user and votes errors for unauthorized access
+    if (checkUnauthorizedError(error) || checkUnauthorizedError(votesError)) {
+      // Logout user and redirect to login page
+      logout();
+      router.push("/auth");
+    }
+  }, [error, votesError, logout, router]);
 
   // Show nothing while waiting for hydration
   if (!hasAuthHydrated) {
