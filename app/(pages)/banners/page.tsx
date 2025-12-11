@@ -13,6 +13,7 @@ const Banners = () => {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const hasAuthHydrated = useAuthStore((state) => state._hasHydrated);
+  const logout = useAuthStore((state) => state.logout);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -21,6 +22,20 @@ const Banners = () => {
       router.push("/auth");
     }
   }, [isAuthenticated, hasAuthHydrated, router]);
+
+  // If backend cleared tokens (401/403) make sure we also log out and redirect
+  useEffect(() => {
+    if (!hasAuthHydrated) return;
+
+    const token =
+      localStorage.getItem("auth-token") ||
+      sessionStorage.getItem("auth-token");
+
+    if (isAuthenticated && !token) {
+      logout();
+      router.push("/auth");
+    }
+  }, [hasAuthHydrated, isAuthenticated, logout, router]);
 
   // Show nothing while waiting for hydration
   if (!hasAuthHydrated) {

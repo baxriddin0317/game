@@ -11,12 +11,18 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuthStore } from "@/contexts/AuthStore";
 import { useRouter } from "next/navigation";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
+import axios from "axios";
 
 const Servers = () => {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const hasAuthHydrated = useAuthStore((state) => state._hasHydrated);
-  const { data: myServersData, isLoading } = useServers({ my_servers: 1 });
+  const logout = useAuthStore((state) => state.logout);
+  const {
+    data: myServersData,
+    isLoading,
+    error: myServersError,
+  } = useServers({ my_servers: 1 });
   const myServers = myServersData?.data || [];
   const { t } = useTranslation();
 
@@ -29,6 +35,35 @@ const Servers = () => {
       router.push("/auth");
     }
   }, [isAuthenticated, hasAuthHydrated, router]);
+
+  // If backend cleared tokens (401/403) make sure we also log out and redirect
+  useEffect(() => {
+    if (!hasAuthHydrated) return;
+
+    const token =
+      localStorage.getItem("auth-token") ||
+      sessionStorage.getItem("auth-token");
+
+    if (isAuthenticated && !token) {
+      logout();
+      router.push("/auth");
+    }
+  }, [hasAuthHydrated, isAuthenticated, logout, router]);
+
+  // React to 401/403 errors from servers query
+  useEffect(() => {
+    const isUnauthorized =
+      axios.isAxiosError(myServersError) &&
+      (myServersError.response?.status === 401 ||
+        myServersError.response?.status === 403 ||
+        myServersError.message?.includes("401") ||
+        myServersError.message?.includes("Unauthorized"));
+
+    if (isUnauthorized) {
+      logout();
+      router.push("/auth");
+    }
+  }, [logout, myServersError, router]);
 
   // Show nothing while waiting for hydration
   if (!hasAuthHydrated) {
