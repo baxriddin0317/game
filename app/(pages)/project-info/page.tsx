@@ -1,9 +1,9 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
-const ProjectInfoRedirect = () => {
+const ProjectInfoRedirectContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug") || "";
@@ -34,6 +34,24 @@ const ProjectInfoRedirect = () => {
         <LoadingSpinner />
       </div>
     </div>
+  );
+};
+
+const ProjectInfoRedirectLoadingFallback = () => {
+  return (
+    <div className="w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl p-3 lg:p-4 mb-4">
+      <div className="flex justify-center items-center h-64">
+        <LoadingSpinner />
+      </div>
+    </div>
+  );
+};
+
+const ProjectInfoRedirect = () => {
+  return (
+    <Suspense fallback={<ProjectInfoRedirectLoadingFallback />}>
+      <ProjectInfoRedirectContent />
+    </Suspense>
   );
 };
 
