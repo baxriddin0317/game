@@ -29,7 +29,7 @@ const FilterButtons = ({ rates, chronicles, servers, colSpan }: props) => {
     } else if (filterType === "chronicle") {
       setPendingChronicle(parseInt(filterId));
     } else if (filterType === "server" && serverSlug) {
-      router.push(`/project-info?slug=${serverSlug}`);
+      router.push(`/server/${serverSlug}`);
     }
   };
 

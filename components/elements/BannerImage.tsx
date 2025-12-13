@@ -14,7 +14,7 @@ const BannerImage = () => {
   }
 
   const imageSrc = backgroundImage?.image || "";
-  const imageAlt = backgroundImage?.alt || "Right";
+  const imageAlt = backgroundImage?.alt || "banner image";
 
   return (
     <Image

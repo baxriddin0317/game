@@ -116,11 +116,10 @@ const ServerItemDropdown = ({
       return;
     }
     
-    const params = new URLSearchParams({
-      slug: server.project.slug,
+    const search = new URLSearchParams({
       serverId: server.id.toString(),
     });
-    const url = `/project-info?${params.toString()}`;
+    const url = `/server/${server.project.slug}?${search.toString()}`;
     route.push(url);
   };
 
