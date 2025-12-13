@@ -48,7 +48,6 @@ export const FilterContent = () => {
     per_page: 6,
     sort: "rating",
   });
-console.log(advertisementsBackground);
 
   // Register all data loaders
   useRegisterLoader(advertisementsBackgroundLoading, "sidebar-advertisements");
