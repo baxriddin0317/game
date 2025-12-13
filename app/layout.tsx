@@ -31,20 +31,6 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <AppLoadingProvider>
-                <Image
-                  src="/left.png"
-                  alt="Left"
-                  width={1658}
-                  height={900}
-                  className=" absolute top-0 left-0 z-0 w-[1658px] h-auto mix-blend-mode"
-                />
-                <Image
-                  src="/right.png"
-                  alt="Right"
-                  width={1487}
-                  height={999}
-                  className=" absolute top-0 right-0 z-0 w-[1487px] h-auto dark:mix-blend-mode"
-                />
                 <BannerImage />
                 <div className="relative z-10">
                   {children}

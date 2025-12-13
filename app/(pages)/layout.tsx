@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="max-w-[1456px] mx-auto px-1 sm:px-4 xl:px-2 pt-32 md:pt-52 lg:pt-64">
+    <main className="max-w-[1456px] mx-auto px-1 sm:px-4 xl:px-2 -mt-80 md:-mt-72 lg:-mt-64">
       <Image
         src="/bg-right-1.png"
         alt="Left"
