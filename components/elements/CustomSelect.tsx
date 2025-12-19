@@ -24,40 +24,29 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
   useEffect(() => {
     if (filterType && filterData) {
       if (filterType === "rate") {
-        if (filters.selectedRate) {
-          const selectedItem = filterData.find(
-            (item) => item.name.replace("x", "") === filters.selectedRate
-          );
-          if (selectedItem) {
-            setSelectedOption(selectedItem.name);
-          }
-        } else if (pendingFilters.pendingRate) {
-          const selectedItem = filterData.find(
-            (item) => item.name.replace("x", "") === pendingFilters.pendingRate
-          );
-          if (selectedItem) {
-            setSelectedOption(selectedItem.name);
-          }
-        } else {
-          setSelectedOption(title);
+        const rate = filters.selectedRate ?? pendingFilters.pendingRate;
+
+        if (!rate) return;
+
+        const selectedItem = filterData.find(
+          (item) => item.name.replace("x", "") === rate
+        );
+
+        if (selectedItem) {
+          setSelectedOption(selectedItem.name);
         }
       } else if (filterType === "chronicle") {
-        if (filters.selectedChronicle) {
-          const selectedItem = filterData.find(
-            (item) => item.id === filters.selectedChronicle
-          );
-          if (selectedItem) {
-            setSelectedOption(selectedItem.name);
-          }
-        } else if (pendingFilters.pendingChronicle) {
-          const selectedItem = filterData.find(
-            (item) => item.id === pendingFilters.pendingChronicle
-          );
-          if (selectedItem) {
-            setSelectedOption(selectedItem.name);
-          }
-        } else {
-          setSelectedOption(title);
+        const chronicle =
+          filters.selectedChronicle ?? pendingFilters.pendingChronicle;
+    
+        if (!chronicle) return;
+    
+        const selectedItem = filterData.find(
+          (item) => item.id === chronicle
+        );
+    
+        if (selectedItem) {
+          setSelectedOption(selectedItem.name);
         }
       }
     }
@@ -79,9 +68,6 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
           setPendingChronicle(selectedItem.id);
         }
       }
-    } else {
-      // If it's the default option (title), clear pending filters
-      clearPendingFilters();
     }
   };
 
