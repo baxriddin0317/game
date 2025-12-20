@@ -22,6 +22,7 @@ import {
 import { useMakeComplaint } from "@/lib/queries/useComplaints";
 import { useCanVoteForServer, useVoteForServer } from "@/lib/queries/useVotes";
 import { useTranslation } from "@/contexts/LanguageContext";
+import Link from "next/link";
 
 interface props {
   topserver?: boolean;
@@ -123,6 +124,8 @@ const ServerItemDropdown = ({
     route.push(url);
   };
 
+  console.log("server", server);
+
   return (
     <div className="relative">
       <button
@@ -149,9 +152,9 @@ const ServerItemDropdown = ({
               </span>
             )}
           </span>
-          <span className="overflow-hidden text-sm md:text-base truncate text-ellipsis uppercase group-hover:underline group-focus:underline font-extrabold">
+          <Link href={server.website_url} className="overflow-hidden text-sm md:text-base truncate text-ellipsis uppercase group-hover:underline group-focus:underline font-extrabold">
             {server.announce_name}
-          </span>
+          </Link>
           <div className="hidden flex-row items-center gap-1 text-orange-600 md:flex" />
         </div>
         <div className="flex flex-col 2xl:flex-row 2xl:items-center lg:!gap-2">
