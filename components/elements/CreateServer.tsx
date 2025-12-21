@@ -558,7 +558,7 @@ const CreateServer = ({ serverData = null, onBack }: props) => {
           </div>
 
           {/* Rates */}
-          <div className="col-span-2">
+          <div className="">
             <label className="block text-xs font-bold text-brand-primary dark:text-white mb-2.5">
               {t("create_server_rates")}
             </label>
@@ -589,7 +589,7 @@ const CreateServer = ({ serverData = null, onBack }: props) => {
               value={formData.chronicleId}
               onValueChange={(value) => handleInputChange("chronicleId", value)}
             >
-              <SelectTrigger className="w-full h-11 bg-brand-gray-3 dark:bg-brand-dark border border-[#d7dfe4] dark:border-[#21252f]">
+              <SelectTrigger className="w-full !h-11 bg-brand-gray-3 !rounded-xl dark:bg-brand-dark border border-[#d7dfe4] dark:border-[#21252f]">
                 <SelectValue
                   placeholder={t("create_server_select_chronicle_placeholder")}
                   className="text-brand-primary dark:text-white"
