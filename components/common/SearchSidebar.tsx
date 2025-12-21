@@ -15,6 +15,7 @@ import { useFilter } from "@/contexts/FilterContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
 import { FaRegThumbsUp } from "react-icons/fa";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 const SearchSidebar = () => {
   return (
@@ -96,7 +97,17 @@ export const FilterContent = () => {
       <div className="hidden lg:inline-block bg-[#292c34] mb-5">
         <div className="p-5 rounded-xl w-full max-w-md">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <TopIcon />
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="cursor-pointer">
+                  <TopIcon />
+                </TooltipTrigger>
+                <TooltipContent className="translate-x-7">
+                  <p className="text-white text-sm font-medium">По голосам пользователей</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <h2 className="text-white font-bold uppercase tracking-[1px]">
               {t("mobile_top_5_servers")}
             </h2>
