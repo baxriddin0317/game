@@ -10,7 +10,7 @@ import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
 import { Url } from "next/dist/shared/lib/router/router";
 import { useRates } from "@/lib/queries/useRates";
 import { useChronicles } from "@/lib/queries/useChronicles";
-import { useServers, useTop5Servers } from "@/lib/queries/useServers";
+import { useServers, useGetServerTypes, useTop5Servers } from "@/lib/queries/useServers";
 import { useFilter } from "@/contexts/FilterContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
@@ -45,6 +45,7 @@ export const FilterContent = () => {
   const { data: rates, isLoading: ratesLoading } = useRates();
   const { data: chronicles, isLoading: chroniclesLoading } = useChronicles();
   const { data: top5Servers, isLoading: top5Loading } = useTop5Servers();
+  const { data: serverTypes, isLoading: serverTypesLoading } = useGetServerTypes();
   const { data: servers, isLoading: serversLoading } = useServers({
     per_page: 6,
     sort: "rating",
@@ -56,6 +57,7 @@ export const FilterContent = () => {
   useRegisterLoader(chroniclesLoading, "sidebar-chronicles");
   useRegisterLoader(top5Loading, "sidebar-top5");
   useRegisterLoader(serversLoading, "sidebar-servers");
+  useRegisterLoader(serverTypesLoading, "sidebar-servers-type");
 
   return (
     <>
@@ -68,7 +70,7 @@ export const FilterContent = () => {
           >
             {t("search_top_servers")}
           </Link>
-          <FilterButtons servers={servers?.data || []} colSpan="col-span-1" />
+          <FilterButtons chronicles={chronicles?.data.slice(0,6) || []} colSpan="col-span-1" />
         </div>
 
         <div className="grid grid-cols-2 gap-x-3.5 gap-y-[18px] py-5">
@@ -186,7 +188,7 @@ export const FilterContent = () => {
       <div className="px-5">
         <div className="grid grid-cols-2 gap-3.5 py-5 border-y border-brand-primary">
           <FilterButtons
-            chronicles={chronicles?.data || []}
+            serversTypes={serverTypes?.data || []}
             colSpan="col-span-1"
           />
         </div>

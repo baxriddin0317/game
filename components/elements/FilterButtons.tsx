@@ -1,26 +1,27 @@
 "use client";
 import { Chronicle } from "@/lib/types/chronicle";
 import { Rate } from "@/lib/types/rate";
-import { Server } from "@/lib/types/server";
+import { Server, ServerType } from "@/lib/types/server";
 import React from "react";
 import { useFilter } from "@/contexts/FilterContext";
 import { useRouter } from "next/navigation";
 
 interface props {
   servers?: Server[];
+  serversTypes?: ServerType[];
   rates?: Rate[];
   chronicles?: Chronicle[];
   colSpan: string;
 }
 
-const FilterButtons = ({ rates, chronicles, servers, colSpan }: props) => {
+const FilterButtons = ({ rates, chronicles, servers, serversTypes, colSpan }: props) => {
   const router = useRouter();
   const { filters, pendingFilters, setPendingRate, setPendingChronicle } =
     useFilter();
 
   const handleFilterClick = (
     filterId: string,
-    filterType: "rate" | "chronicle" | "server",
+    filterType: "rate" | "chronicle" | "server" | "server-type",
     filterValue: string,
     serverSlug?: string,
   ) => {
@@ -33,24 +34,31 @@ const FilterButtons = ({ rates, chronicles, servers, colSpan }: props) => {
     }
   };
 
+  console.log(serversTypes);
+  
   return (
     <>
-      {rates?.map((rate) => (
-        <button
-          key={rate.id}
-          onClick={() =>
-            handleFilterClick(rate.name.replace("x", ""), "rate", rate.name)
-          }
-          className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 px-2 ${
-            filters.selectedRate === rate.name.replace("x", "") ||
-            pendingFilters.pendingRate === rate.name.replace("x", "")
-              ? "border-[#ee8b21]"
-              : "border-brand-btn-gray-3"
-          }`}
-        >
-          <span className="truncate">{rate.name}</span>
-        </button>
-      ))}
+      {rates && rates.length > 0 && (
+        <>
+          <h1 className="col-span-2 text-white font-bold uppercase tracking-[1px] text-center">ПОПУЛЯРНЫЕ РЕЙТЫ</h1>
+          {rates?.map((rate) => (
+            <button
+              key={rate.id}
+              onClick={() =>
+                handleFilterClick(rate.name.replace("x", ""), "rate", rate.name)
+              }
+              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 px-2 ${
+                filters.selectedRate === rate.name.replace("x", "") ||
+                pendingFilters.pendingRate === rate.name.replace("x", "")
+                  ? "border-[#ee8b21]"
+                  : "border-brand-btn-gray-3"
+              }`}
+            >
+              <span className="truncate">{rate.name}</span>
+            </button>
+          ))}
+        </>
+      )}
       {chronicles?.map((chronicle) => (
         <button
           key={chronicle.id}
@@ -87,6 +95,28 @@ const FilterButtons = ({ rates, chronicles, servers, colSpan }: props) => {
           <span className="truncate">{server.announce_name}</span>
         </button>
       ))}
+
+      {serversTypes && serversTypes?.length > 0 && (
+        <>
+          <h1 className="col-span-2 text-white font-bold uppercase tracking-[1px] text-center">ПОДКАТЕГОРИИ СЕРВЕРОВ</h1>
+          {serversTypes?.map((server) => (
+            <button
+              key={server.id}
+              onClick={() =>
+                handleFilterClick(
+                  server.id.toString(),
+                  "server-type",
+                  server.name,
+                  server.slug,
+                )
+              }
+              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 border-brand-btn-gray-3 px-2`}
+            >
+              <span className="truncate">{server.name}</span>
+            </button>
+          ))}
+        </>
+      )}
     </>
   );
 };
