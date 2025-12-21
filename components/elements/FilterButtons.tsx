@@ -1,119 +1,77 @@
 "use client";
+
+import Link from "next/link";
 import { Chronicle } from "@/lib/types/chronicle";
 import { Rate } from "@/lib/types/rate";
-import { Server, ServerType } from "@/lib/types/server";
-import React from "react";
-import { useFilter } from "@/contexts/FilterContext";
-import { useRouter } from "next/navigation";
+import { ServerType } from "@/lib/types/server";
 
-interface props {
-  servers?: Server[];
+interface Props {
   serversTypes?: ServerType[];
   rates?: Rate[];
   chronicles?: Chronicle[];
   colSpan: string;
 }
 
-const FilterButtons = ({ rates, chronicles, servers, serversTypes, colSpan }: props) => {
-  const router = useRouter();
-  const { filters, pendingFilters, setPendingRate, setPendingChronicle } =
-    useFilter();
-
-  const handleFilterClick = (
-    filterId: string,
-    filterType: "rate" | "chronicle" | "server" | "server-type",
-    filterValue: string,
-    serverSlug?: string,
-  ) => {
-    if (filterType === "rate") {
-      setPendingRate(filterId);
-    } else if (filterType === "chronicle") {
-      setPendingChronicle(parseInt(filterId));
-    } else if (filterType === "server" && serverSlug) {
-      router.push(`/server/${serverSlug}`);
-    }
-  };
-
-  console.log(serversTypes);
+const FilterButtons = ({ rates, chronicles, serversTypes, colSpan }: Props) => {
   
+
   return (
     <>
+      {/* RATES */}
       {rates && rates.length > 0 && (
         <>
-          <h1 className="col-span-2 text-white font-bold uppercase tracking-[1px] text-center">ПОПУЛЯРНЫЕ РЕЙТЫ</h1>
-          {rates?.map((rate) => (
-            <button
+          <h1 className="col-span-2 text-white font-bold uppercase tracking-[1px] text-center">
+            ПОПУЛЯРНЫЕ РЕЙТЫ
+          </h1>
+          {rates.map((rate) => (
+            <Link
               key={rate.id}
-              onClick={() =>
-                handleFilterClick(rate.name.replace("x", ""), "rate", rate.name)
-              }
-              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 px-2 ${
-                filters.selectedRate === rate.name.replace("x", "") ||
-                pendingFilters.pendingRate === rate.name.replace("x", "")
+              href={`/rates/${rate.name}`}
+              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border rounded-xl transition-all duration-200 px-2 ${
+                false
                   ? "border-[#ee8b21]"
                   : "border-brand-btn-gray-3"
               }`}
             >
               <span className="truncate">{rate.name}</span>
-            </button>
+            </Link>
           ))}
         </>
       )}
-      {chronicles?.map((chronicle) => (
-        <button
-          key={chronicle.id}
-          onClick={() =>
-            handleFilterClick(
-              chronicle.id.toString(),
-              "chronicle",
-              chronicle.name,
-            )
-          }
-          className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 px-2 ${
-            filters.selectedChronicle === chronicle.id ||
-            pendingFilters.pendingChronicle === chronicle.id
-              ? "border-[#ee8b21]"
-              : "border-brand-btn-gray-3"
-          }`}
-        >
-          <span className="truncate">{chronicle.name}</span>
-        </button>
-      ))}
-      {servers?.map((server) => (
-        <button
-          key={server.id}
-          onClick={() =>
-            handleFilterClick(
-              server.id.toString(),
-              "server",
-              server.announce_name,
-              server.url_slug,
-            )
-          }
-          className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 border-brand-btn-gray-3 px-2`}
-        >
-          <span className="truncate">{server.announce_name}</span>
-        </button>
-      ))}
 
-      {serversTypes && serversTypes?.length > 0 && (
+      {/* CHRONICLES */}
+      {chronicles && chronicles.length > 0 && (
         <>
-          <h1 className="col-span-2 text-white font-bold uppercase tracking-[1px] text-center">ПОДКАТЕГОРИИ СЕРВЕРОВ</h1>
-          {serversTypes?.map((server) => (
-            <button
+          {chronicles.map((chronicle) => (
+            <Link
+              key={chronicle.id}
+              href={`/chronicle/${chronicle.slug}`}
+              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border rounded-xl transition-all duration-200 px-2 ${
+                false
+                  ? "border-[#ee8b21]"
+                  : "border-brand-btn-gray-3"
+              }`}
+            >
+              <span className="truncate">{chronicle.name}</span>
+            </Link>
+          ))}
+        </>
+      )}
+
+      {/* SERVER TYPES */}
+      {serversTypes && serversTypes.length > 0 && (
+        <>
+          <h1 className="col-span-2 text-white font-bold uppercase tracking-[1px] text-center">
+            ПОДКАТЕГОРИИ СЕРВЕРОВ
+          </h1>
+          {serversTypes.map((server) => (
+            <Link
               key={server.id}
-              onClick={() =>
-                handleFilterClick(
-                  server.id.toString(),
-                  "server-type",
-                  server.name,
-                  server.slug,
-                )
-              }
-              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border  rounded-xl transition-all duration-200 border-brand-btn-gray-3 px-2`}
+              href={`/${server.name}`}
+              className={`${colSpan} cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border rounded-xl transition-all duration-200 px-2 border-brand-btn-gray-3`}
             >
               <span className="truncate">{server.name}</span>
-            </button>
+            </Link>
           ))}
         </>
       )}

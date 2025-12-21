@@ -10,7 +10,7 @@ import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
 import { Url } from "next/dist/shared/lib/router/router";
 import { useRates } from "@/lib/queries/useRates";
 import { useChronicles } from "@/lib/queries/useChronicles";
-import { useServers, useGetServerTypes, useTop5Servers } from "@/lib/queries/useServers";
+import { useGetServerTypes, useTop5Servers } from "@/lib/queries/useServers";
 import { useFilter } from "@/contexts/FilterContext";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
@@ -46,17 +46,12 @@ export const FilterContent = () => {
   const { data: chronicles, isLoading: chroniclesLoading } = useChronicles();
   const { data: top5Servers, isLoading: top5Loading } = useTop5Servers();
   const { data: serverTypes, isLoading: serverTypesLoading } = useGetServerTypes();
-  const { data: servers, isLoading: serversLoading } = useServers({
-    per_page: 6,
-    sort: "rating",
-  });
 
   // Register all data loaders
   useRegisterLoader(advertisementsBackgroundLoading, "sidebar-advertisements");
   useRegisterLoader(ratesLoading, "sidebar-rates");
   useRegisterLoader(chroniclesLoading, "sidebar-chronicles");
   useRegisterLoader(top5Loading, "sidebar-top5");
-  useRegisterLoader(serversLoading, "sidebar-servers");
   useRegisterLoader(serverTypesLoading, "sidebar-servers-type");
 
   return (
@@ -65,7 +60,7 @@ export const FilterContent = () => {
         <SearchInput />
         <div className="grid grid-cols-2 gap-3.5 py-5 border-b border-brand-primary">
           <Link
-            href="/top-servers"
+            href="/servers"
             className="col-span-2 cursor-pointer flex items-center justify-center bg-brand-btn-gray-3 text-white text-sm h-10 border border-brand-btn-gray-3 rounded-xl transition-all duration-200 hover:border-[#ee8b21]"
           >
             {t("search_top_servers")}

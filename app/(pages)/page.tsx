@@ -1,8 +1,21 @@
+"use client";
+
 import MobileFilterSidebar from "@/components/common/MobileFilterSidebar";
 import SearchSidebar from "@/components/common/SearchSidebar";
 import ServersSection from "@/components/elements/ServersSection";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Home() {
+function HomeContent() {
+  const searchParams = useSearchParams();
+  
+  // URL dan filterlarni olish
+  const filters = {
+    rate: searchParams.get("rate") || null,
+    chronicle: searchParams.get("chronicle") || null,
+    serverType: searchParams.get("server-type") || null,
+  };
+
   return (
     <>
       <MobileFilterSidebar />
@@ -13,5 +26,13 @@ export default function Home() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }

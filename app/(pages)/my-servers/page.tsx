@@ -73,7 +73,7 @@ const Servers = () => {
   if (!isAuthenticated) {
     return null;
   }
-console.log(myServers);
+
   return (
     <>
       <MobileMenu />

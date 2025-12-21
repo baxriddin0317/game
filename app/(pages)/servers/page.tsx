@@ -3,18 +3,22 @@
 import MobileFilterSidebar from "@/components/common/MobileFilterSidebar";
 import SearchSidebar from "@/components/common/SearchSidebar";
 import ServerCard from "@/components/elements/ServerCard";
-import { useTop5Servers } from "@/lib/queries/useServers";
+import { useServers } from "@/lib/queries/useServers";
 import React, { useState } from "react";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
 import { Pagination } from "@/components/ui/pagination";
 
-const TopServers = () => {
+const Servers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 10;
-  const { data: topServers, isLoading, error } = useTop5Servers();
+  const { data: topServers, isLoading, error } = useServers({
+    page: currentPage,
+    per_page: perPage,
+    sort: "rating",
+  });
   const { t } = useTranslation(); 
-  useRegisterLoader(isLoading, "top-servers-page");
+  useRegisterLoader(isLoading, "servers-page");
 
   if (error) {
     return (
@@ -86,4 +90,4 @@ const TopServers = () => {
   );
 };
 
-export default TopServers;
+export default Servers;

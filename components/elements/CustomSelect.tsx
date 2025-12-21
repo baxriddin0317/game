@@ -26,20 +26,24 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
       .map(opt => parseInt(opt.replace('x', '')))
       .sort((a, b) => a - b);
     
-    if (numericRates.length === 0) return [];
-    
+    // Define range breakpoints
+    const breakpoints = [1, 10, 50, 100, 1000, 2000];
     const ranges: { label: string; min: number; max: number }[] = [];
     
-    // Create ranges between consecutive values
-    for (let i = 0; i < numericRates.length - 1; i++) {
-      const min = numericRates[i];
-      const max = numericRates[i + 1];
+    for (let i = 0; i < breakpoints.length - 1; i++) {
+      const min = breakpoints[i];
+      const max = breakpoints[i + 1];
       
-      ranges.push({
-        label: `x${min}-x${max}`,
-        min: min,
-        max: max
-      });
+      // Check if any rates exist in this range
+      const hasRatesInRange = numericRates.some(rate => rate >= min && rate <= max);
+      
+      if (hasRatesInRange) {
+        ranges.push({
+          label: `x${min}-x${max}`,
+          min: min,
+          max: max
+        });
+      }
     }
     
     return ranges;
@@ -145,6 +149,12 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
 
         {isSelectOpen && (
           <div className="absolute top-full -translate-y-[4px] left-0 right-0 mt-1 bg-brand-btn-gray-3 rounded-b-xl overflow-hidden shadow-lg z-50">
+            <button
+                onClick={() => handleSelectOption(title)}
+                className="w-full px-4 py-3 text-left text-xs text-white cursor-pointer hover:opacity-90 border-b border-brand-main-2 transition-colors"
+              >
+                {title}
+              </button>
             {displayOptions.map((option, index) => (
               <button
                 key={index}
