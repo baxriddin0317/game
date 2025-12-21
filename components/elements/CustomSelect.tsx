@@ -15,10 +15,40 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
   const {
     setPendingRate,
     setPendingChronicle,
-    clearPendingFilters,
     filters,
     pendingFilters,
   } = useFilter();
+
+  // Convert rate options to ranges dynamically
+  const getRateRanges = (rateOptions: string[]) => {
+    // Extract numeric values and sort them
+    const numericRates = rateOptions
+      .map(opt => parseInt(opt.replace('x', '')))
+      .sort((a, b) => a - b);
+    
+    if (numericRates.length === 0) return [];
+    
+    const ranges: { label: string; min: number; max: number }[] = [];
+    
+    // Create ranges between consecutive values
+    for (let i = 0; i < numericRates.length - 1; i++) {
+      const min = numericRates[i];
+      const max = numericRates[i + 1];
+      
+      ranges.push({
+        label: `x${min}-x${max}`,
+        min: min,
+        max: max
+      });
+    }
+    
+    return ranges;
+  };
+
+  // Get display options based on filter type
+  const displayOptions = filterType === "rate" 
+    ? getRateRanges(options).map(r => r.label)
+    : options;
 
   // Update selected option when filters change
   useEffect(() => {
@@ -28,12 +58,14 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
 
         if (!rate) return;
 
-        const selectedItem = filterData.find(
-          (item) => item.name.replace("x", "") === rate
+        const rateNum = parseInt(rate);
+        const ranges = getRateRanges(options);
+        const matchingRange = ranges.find(
+          r => rateNum >= r.min && rateNum <= r.max
         );
 
-        if (selectedItem) {
-          setSelectedOption(selectedItem.name);
+        if (matchingRange) {
+          setSelectedOption(matchingRange.label);
         }
       } else if (filterType === "chronicle") {
         const chronicle =
@@ -53,31 +85,33 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
   }, [filters, pendingFilters, filterType, filterData, title]);
 
   const handleSelectOption = (option: string) => {
-    setSelectedOption(option);
     setIsSelectOpen(false);
 
-    // If this is a filter select, update the pending filter context
     if (filterType && filterData) {
-      const selectedItem = filterData.find((item) => item.name === option);
-      if (selectedItem) {
-        if (filterType === "rate") {
-          // Extract numeric value from rate name (e.g., "x7" -> "7")
-          const rateValue = selectedItem.name.replace("x", "");
-          setPendingRate(rateValue);
-        } else if (filterType === "chronicle") {
+      if (filterType === "rate") {
+        const match = option.match(/x(\d+)-x(\d+)/);
+        if (match) {
+          const minValue = match[2];
+          setPendingRate(minValue);
+        }
+        setSelectedOption(option);
+      } else if (filterType === "chronicle") {
+        const selectedItem = filterData.find((item) => item.name === option);
+        if (selectedItem) {
           setPendingChronicle(selectedItem.id);
+          setSelectedOption(option);
         }
       }
     }
   };
-
+  
   // Check if this select has an active filter or pending filter
   const isActive =
     (filterType === "rate" &&
       (filters.selectedRate || pendingFilters.pendingRate)) ||
     (filterType === "chronicle" &&
       (filters.selectedChronicle || pendingFilters.pendingChronicle));
-
+      
   return (
     <>
       <div className="col-span-1 relative">
@@ -111,7 +145,7 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
 
         {isSelectOpen && (
           <div className="absolute top-full -translate-y-[4px] left-0 right-0 mt-1 bg-brand-btn-gray-3 rounded-b-xl overflow-hidden shadow-lg z-50">
-            {options.map((option, index) => (
+            {displayOptions.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleSelectOption(option)}

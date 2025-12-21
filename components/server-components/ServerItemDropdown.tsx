@@ -124,8 +124,6 @@ const ServerItemDropdown = ({
     route.push(url);
   };
 
-  console.log("server", server);
-
   return (
     <div className="relative">
       <button
