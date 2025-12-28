@@ -36,14 +36,14 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
 
   const setPendingRate = (rateId: string | null) => {
     setPendingFilters((prev) => ({
+      ...prev,
       pendingRate: rateId,
-      pendingChronicle: null, // Clear chronicle when rate is selected
     }));
   };
 
   const setPendingChronicle = (chronicleId: number | null) => {
     setPendingFilters((prev) => ({
-      pendingRate: null, // Clear rate when chronicle is selected
+      ...prev,
       pendingChronicle: chronicleId,
     }));
   };

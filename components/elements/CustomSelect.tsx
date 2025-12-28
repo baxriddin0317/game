@@ -54,13 +54,25 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
     ? getRateRanges(options).map(r => r.label)
     : options;
 
-  // Update selected option when filters change
+  // Add title as the first option in the list
+  const allOptions = [title, ...displayOptions];
+
+  // Update selected option only when applied filters change (not pending filters)
+  // This allows users to change selection freely before applying
   useEffect(() => {
     if (filterType && filterData) {
       if (filterType === "rate") {
-        const rate = filters.selectedRate ?? pendingFilters.pendingRate;
+        const rate = filters.selectedRate;
 
-        if (!rate) return;
+        // Only update if there's an applied filter
+        // Don't reset if user is changing pending selection
+        if (!rate) {
+          // Only reset to title if there's no pending selection either
+          if (!pendingFilters.pendingRate) {
+            setSelectedOption(title);
+          }
+          return;
+        }
 
         const rateNum = parseInt(rate);
         const ranges = getRateRanges(options);
@@ -70,12 +82,21 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
 
         if (matchingRange) {
           setSelectedOption(matchingRange.label);
+        } else {
+          setSelectedOption(title);
         }
       } else if (filterType === "chronicle") {
-        const chronicle =
-          filters.selectedChronicle ?? pendingFilters.pendingChronicle;
+        const chronicle = filters.selectedChronicle;
     
-        if (!chronicle) return;
+        // Only update if there's an applied filter
+        // Don't reset if user is changing pending selection
+        if (!chronicle) {
+          // Only reset to title if there's no pending selection either
+          if (!pendingFilters.pendingChronicle) {
+            setSelectedOption(title);
+          }
+          return;
+        }
     
         const selectedItem = filterData.find(
           (item) => item.id === chronicle
@@ -83,22 +104,36 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
     
         if (selectedItem) {
           setSelectedOption(selectedItem.name);
+        } else {
+          setSelectedOption(title);
         }
       }
     }
-  }, [filters, pendingFilters, filterType, filterData, title]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.selectedRate, filters.selectedChronicle]);
 
   const handleSelectOption = (option: string) => {
     setIsSelectOpen(false);
 
     if (filterType && filterData) {
+      // Check if the selected option is the title (which means "all" / clear filter)
+      if (option === title) {
+        if (filterType === "rate") {
+          setPendingRate(null);
+        } else if (filterType === "chronicle") {
+          setPendingChronicle(null);
+        }
+        setSelectedOption(title);
+        return;
+      }
+
       if (filterType === "rate") {
         const match = option.match(/x(\d+)-x(\d+)/);
         if (match) {
           const minValue = match[2];
           setPendingRate(minValue);
+          setSelectedOption(option);
         }
-        setSelectedOption(option);
       } else if (filterType === "chronicle") {
         const selectedItem = filterData.find((item) => item.name === option);
         if (selectedItem) {
@@ -110,7 +145,9 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
   };
   
   // Check if this select has an active filter or pending filter
+  // Also check if selectedOption is different from title (meaning something is selected)
   const isActive =
+    selectedOption !== title ||
     (filterType === "rate" &&
       (filters.selectedRate || pendingFilters.pendingRate)) ||
     (filterType === "chronicle" &&
@@ -149,13 +186,7 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
 
         {isSelectOpen && (
           <div className="absolute top-full -translate-y-[4px] left-0 right-0 mt-1 bg-brand-btn-gray-3 rounded-b-xl overflow-hidden shadow-lg z-50">
-            <button
-                onClick={() => handleSelectOption(title)}
-                className="w-full px-4 py-3 text-left text-xs text-white cursor-pointer hover:opacity-90 border-b border-brand-main-2 transition-colors"
-              >
-                {title}
-              </button>
-            {displayOptions.map((option, index) => (
+            {allOptions.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleSelectOption(option)}

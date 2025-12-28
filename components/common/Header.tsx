@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import ThemeToggle from "../elements/ThemeToggle";
 import LanguageSelector from "../elements/LanguageSelector";
 import LoginButton from "../elements/LoginButton";
@@ -12,6 +12,9 @@ import Link from "next/link";
 import { useAuthStore } from "@/contexts/AuthStore";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useLogout, useGetUser } from "@/lib/queries/useAuth";
+import { useFilter } from "@/contexts/FilterContext";
+import { useRates } from "@/lib/queries/useRates";
+import { useChronicles } from "@/lib/queries/useChronicles";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,8 +29,58 @@ export default function Header() {
   const { data: queryUser } = useGetUser(isAuthenticated);
   const { t } = useTranslation();
   const logoutMutation = useLogout();
+  const { filters } = useFilter();
+  const { data: rates } = useRates();
+  const { data: chronicles } = useChronicles();
 
   const user = authUser || queryUser;
+
+  // Get rate range format from selected rate value
+  const getRateRangeLabel = (rateValue: string | null): string | null => {
+    if (!rateValue || !rates?.data) return null;
+
+    const rateNum = parseInt(rateValue);
+    if (isNaN(rateNum)) return null;
+
+    // Define range breakpoints (same as in CustomSelect)
+    const breakpoints = [1, 10, 50, 100, 1000, 2000];
+    
+    for (let i = 0; i < breakpoints.length - 1; i++) {
+      const min = breakpoints[i];
+      const max = breakpoints[i + 1];
+      
+      if (rateNum >= min && rateNum <= max) {
+        return `x${min}-x${max}`;
+      }
+    }
+    
+    return null;
+  };
+
+  // Format filter labels for title
+  const filterLabels = useMemo(() => {
+    const labels: string[] = [];
+    
+    // Get chronicle name if selected
+    if (filters.selectedChronicle && chronicles?.data) {
+      const chronicle = chronicles.data.find(c => c.id === filters.selectedChronicle);
+      if (chronicle) {
+        labels.push(chronicle.name);
+      }
+    }
+    
+    // Get rate range if selected
+    const rateRange = getRateRangeLabel(filters.selectedRate);
+    if (rateRange) {
+      labels.push(rateRange);
+    }
+    
+    return labels;
+  }, [filters.selectedRate, filters.selectedChronicle, chronicles?.data]);
+
+  const titleText = filterLabels.length > 0
+    ? `${t("announcements")} ${filterLabels.join(" ")}`
+    : t("announcements");
 
   // Sync user data from query to auth store
   useEffect(() => {
@@ -64,7 +117,7 @@ export default function Header() {
         </>
 
         <h2 className="lg:text-[22px] leading-7 text-white font-bold">
-          {t("announcements")}
+          {titleText}
         </h2>
         {/* right */}
         <div className="hidden md:flex items-center md:gap-4 lg:gap-6">

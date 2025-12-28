@@ -46,7 +46,7 @@ export const FilterContent = () => {
   const { data: chronicles, isLoading: chroniclesLoading } = useChronicles();
   const { data: top5Servers, isLoading: top5Loading } = useTop5Servers();
   const { data: serverTypes, isLoading: serverTypesLoading } = useGetServerTypes();
-
+  
   // Register all data loaders
   useRegisterLoader(advertisementsBackgroundLoading, "sidebar-advertisements");
   useRegisterLoader(ratesLoading, "sidebar-rates");
