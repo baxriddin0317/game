@@ -25,7 +25,7 @@ const SearchSidebar = () => {
   );
 };
 
-const formatVotes = (votes: number) => {
+export const formatVotes = (votes: number) => {
   if (votes >= 1000) {
     const abbreviated = Math.floor(votes / 1000);
     return `${Math.min(abbreviated, 999)}k`;

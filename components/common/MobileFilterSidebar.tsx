@@ -8,13 +8,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { CiFilter } from "react-icons/ci";
-import { FilterContent } from "./SearchSidebar";
+import { FilterContent, formatVotes } from "./SearchSidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { TopIcon } from "@/icons";
 import { useTop5Servers } from "@/lib/queries/useServers";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { FaRegThumbsUp } from "react-icons/fa";
 
 const MobileFilterSidebar = () => {
   const { data: top5Servers, isLoading } = useTop5Servers();
@@ -33,7 +35,16 @@ const MobileFilterSidebar = () => {
         <div className="lg:hidden bg-[#292c34] p-5 rounded-xl w-full mb-5">
           {/* Title */}
           <div className="flex items-center justify-center gap-2 mb-4">
-            <TopIcon />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="cursor-pointer">
+                  <TopIcon />
+                </TooltipTrigger>
+                <TooltipContent className="translate-x-7">
+                  <p className="text-white text-sm font-medium">По голосам пользователей</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <h2 className="text-white font-bold uppercase tracking-[1px]">
               {t("mobile_top_5_servers")}
             </h2>
@@ -48,11 +59,11 @@ const MobileFilterSidebar = () => {
 
               // Rank doira classi rank bo‘yicha
               const rankClass =
-                server.id === 1
-                  ? "bg-[#ea704e]"
-                  : server.id === 2 || server.id === 3
-                    ? "bg-[linear-gradient(180deg,#b8573c,#ac543c,#874c3e,#594140,#4f3f40)]"
-                    : "bg-[#414753]";
+              index === 0
+                ? "bg-[#ea704e]"
+                : index === 1 || index === 2
+                ? "bg-[linear-gradient(180deg,#b8573c,#ac543c,#874c3e,#594140,#4f3f40)]"
+                : "bg-[#414753]";
 
               return (
                 <Link
@@ -70,12 +81,15 @@ const MobileFilterSidebar = () => {
                       {server.announce_name}
                     </span>
                   </div>
-
+                  <span className="flex items-center gap-1 text-sm text-brand-orange font-semibold z-20">
+                    {formatVotes(server.weighted_votes)}
+                    <FaRegThumbsUp className="mb-1" />
+                  </span>
                   {/* <span className="text-sm text-brand-orange font-semibold z-20">
                     {server.price}
                   </span> */}
                   {/* Overlay for rank 1 */}
-                  {server.id === 1 && (
+                  {index === 0 && (
                     <>
                       <div className="absolute size-full left-0 bg-[linear-gradient(135deg,#b8573c,#ac543c,#874c3e,#594140,#4f3f40)] opacity-80 z-10"></div>
                       <Image
