@@ -70,16 +70,16 @@ export const FilterContent = () => {
 
         <div className="grid grid-cols-2 gap-x-3.5 gap-y-[18px] py-5">
           <CustomSelect
-            title={t("search_all_rates")}
-            options={rates?.data.map((rate) => rate.name) || []}
-            filterType="rate"
-            filterData={rates?.data || []}
-          />
-          <CustomSelect
             title={t("search_all_chronicles")}
             options={chronicles?.data.map((chronicle) => chronicle.name) || []}
             filterType="chronicle"
             filterData={chronicles?.data || []}
+          />
+          <CustomSelect
+            title={t("search_all_rates")}
+            options={rates?.data.map((rate) => rate.name) || []}
+            filterType="rate"
+            filterData={rates?.data || []}
           />
 
           <MainButton

@@ -41,8 +41,9 @@ const MobileFilterSidebar = () => {
 
           {/* Server list */}
           <div className="flex flex-col gap-1.5">
-            {top5Servers?.data.map((server) => {
+            {top5Servers?.data.map((server, index) => {
               // Fon classi rank bo‘yicha
+              const rank = index + 1;
               const bgClass = server.id === 1 ? "" : "bg-[#323741]";
 
               // Rank doira classi rank bo‘yicha
@@ -63,7 +64,7 @@ const MobileFilterSidebar = () => {
                     <span
                       className={`w-7 h-7 flex items-center justify-center rounded-xl text-xs font-extrabold text-white ${rankClass}`}
                     >
-                      {server.id}
+                      {rank}
                     </span>
                     <span className="text-white text-sm font-medium overflow-hidden truncate text-ellipsis">
                       {server.announce_name}
