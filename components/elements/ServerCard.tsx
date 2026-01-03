@@ -118,23 +118,25 @@ const ServerCard: React.FC<ServerCardProps> = ({
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className={`px-2 py-1 rounded-md text-xs leading-4 font-bold ${
-                    index === 0
-                      ? "bg-brand-btn text-white"
-                      : "bg-brand-btn-gray-3 text-white"
-                  }`}
-                >
-                  {tag}
-                </span>
-              ))}
-              <span
-                className={`px-2 py-1 rounded-md text-xs leading-4 font-bold dark:text-white bg-white dark:bg-brand-dark border border-[#e6e9ec] dark:border-[#2c303c]`}
-              >
-                x1000
-              </span>
+              {tags.filter(tag => tag).map((tag, index) => {
+                // First tag (chronicle) - orange background
+                // Second tag (rate) - white background with border
+                // Third tag (server type) - gray background
+                const className = index === 0
+                  ? "bg-brand-btn text-white"
+                  : index === 1
+                  ? "dark:text-white bg-white dark:bg-brand-dark border border-[#e6e9ec] dark:border-[#2c303c]"
+                  : "bg-brand-btn-gray-3 text-white";
+                
+                return (
+                  <span
+                    key={index}
+                    className={`px-2 py-1 rounded-md text-xs leading-4 font-bold ${className}`}
+                  >
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </div>

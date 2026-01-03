@@ -57,20 +57,14 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
   // Add title as the first option in the list
   const allOptions = [title, ...displayOptions];
 
-  // Update selected option only when applied filters change (not pending filters)
-  // This allows users to change selection freely before applying
+  // Update selected option when filters change
   useEffect(() => {
     if (filterType && filterData) {
       if (filterType === "rate") {
-        const rate = filters.selectedRate;
+        const rate = filters.selectedRate ?? pendingFilters.pendingRate;
 
-        // Only update if there's an applied filter
-        // Don't reset if user is changing pending selection
         if (!rate) {
-          // Only reset to title if there's no pending selection either
-          if (!pendingFilters.pendingRate) {
-            setSelectedOption(title);
-          }
+          setSelectedOption(title);
           return;
         }
 
@@ -86,15 +80,11 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
           setSelectedOption(title);
         }
       } else if (filterType === "chronicle") {
-        const chronicle = filters.selectedChronicle;
+        const chronicle =
+          filters.selectedChronicle ?? pendingFilters.pendingChronicle;
     
-        // Only update if there's an applied filter
-        // Don't reset if user is changing pending selection
         if (!chronicle) {
-          // Only reset to title if there's no pending selection either
-          if (!pendingFilters.pendingChronicle) {
-            setSelectedOption(title);
-          }
+          setSelectedOption(title);
           return;
         }
     
@@ -109,8 +99,7 @@ const CustomSelect = ({ options, title, filterType, filterData }: props) => {
         }
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.selectedRate, filters.selectedChronicle]);
+  }, [filters, pendingFilters, filterType, filterData, title, options]);
 
   const handleSelectOption = (option: string) => {
     setIsSelectOpen(false);

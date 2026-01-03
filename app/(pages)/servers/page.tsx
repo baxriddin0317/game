@@ -15,11 +15,11 @@ const Servers = () => {
   const { data: topServers, isLoading, error } = useServers({
     page: currentPage,
     per_page: perPage,
-    sort: "rating",
+    sort: "votes",
   });
   const { t } = useTranslation(); 
   useRegisterLoader(isLoading, "servers-page");
-
+  
   if (error) {
     return (
       <>
@@ -56,6 +56,7 @@ const Servers = () => {
                   description={server.short_description}
                   tags={[
                     server.chronicle?.name || "",
+                    server.rate ? (server.rate.startsWith('x') ? server.rate : `x${server.rate}`) : "",
                     server.server_type_data?.name || "",
                   ]}
                   rating={server.rating_stars}
