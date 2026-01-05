@@ -55,6 +55,7 @@ export type Server = {
   id: number;
   url_slug: string;
   announce_name: string;
+  assembly_type: string;
   rating_name: string;
   meta_title: string;
   meta_description: string;

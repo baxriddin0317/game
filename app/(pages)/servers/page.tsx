@@ -19,7 +19,7 @@ const Servers = () => {
   });
   const { t } = useTranslation(); 
   useRegisterLoader(isLoading, "servers-page");
-  
+  console.log("top servers",topServers);
   if (error) {
     return (
       <>
@@ -55,9 +55,10 @@ const Servers = () => {
                   title={server.announce_name}
                   description={server.short_description}
                   tags={[
-                    server.chronicle?.name || "",
+                    server.chronicle?.name,
+                    server.assembly_type,
+                    server.server_type_data?.name,
                     server.rate ? (server.rate.startsWith('x') ? server.rate : `x${server.rate}`) : "",
-                    server.server_type_data?.name || "",
                   ]}
                   rating={server.rating_stars}
                   votes={server.votes_count}

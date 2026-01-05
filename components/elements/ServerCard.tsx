@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { FaThumbsUp, FaCheck } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { CommentIcon, FlagIcon } from "@/icons";
 import Link from "next/link";
 import { renderStars } from "./RenderStars";
@@ -124,7 +124,7 @@ const ServerCard: React.FC<ServerCardProps> = ({
                 // Third tag (server type) - gray background
                 const className = index === 0
                   ? "bg-brand-btn text-white"
-                  : index === 1
+                  : index == tags.length - 1
                   ? "dark:text-white bg-white dark:bg-brand-dark border border-[#e6e9ec] dark:border-[#2c303c]"
                   : "bg-brand-btn-gray-3 text-white";
                 

@@ -24,6 +24,7 @@ type SortOrder = "asc" | "desc";
 
 type GetServersParams = {
   chronicle_id?: number;
+  assembly_type?: string;
   rate?: string;
   status?: ServerStatus;
   search?: string;

@@ -51,8 +51,10 @@ const TopServers = () => {
                   title={server.announce_name}
                   description={server.short_description}
                   tags={[
-                    server.chronicle?.name || "",
-                    server.server_type_data?.name || "",
+                    server.chronicle?.name,
+                    server.assembly_type,
+                    server.server_type_data?.name,
+                    server.rate ? (server.rate.startsWith('x') ? server.rate : `x${server.rate}`) : "",
                   ]}
                   rating={server.rating_stars}
                   votes={server.votes_count}
