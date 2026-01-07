@@ -50,9 +50,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             />
             {children}
           </div>
-          <Info />
         </div>
       </main>
+      <div className="bg-brand-light dark:bg-brand-dark h-full relative z-20 -mt-80 md:-mt-72 lg:-mt-64 pt-80 pb-14">
+        <Info />
+      </div>
     </>
   );
 }

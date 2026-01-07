@@ -22,6 +22,7 @@ import { useGetVotesHistory } from "@/lib/queries/useVotes";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import Image from "next/image";
 
 const ProjectInfoContent = () => {
   const [isVoted, setIsVoted] = useState(false);
@@ -30,12 +31,11 @@ const ProjectInfoContent = () => {
   const slug = (params?.slug as string) || "";
   const serverIdParam = searchParams.get("serverId");
   const { t } = useTranslation();
-
   const { data: project, isLoading, error } = useProjectBySlug(slug);
   const { data: votesHistory, isLoading: isLoadingVotes } = useGetVotesHistory(
     project?.id?.toString() || ""
   );
-
+  
   useRegisterLoader(isLoading, "project-info-project");
   useRegisterLoader(isLoadingVotes, "project-info-votes");
 
@@ -56,12 +56,12 @@ const ProjectInfoContent = () => {
       </div>
     );
   }
-
+  
   const server = serverIdParam
-    ? project?.servers?.find((s) => s.id.toString() === serverIdParam) ||
-      project?.servers?.[0]
-    : project?.servers?.[0];
-
+  ? project?.servers?.find((s) => s.id.toString() === serverIdParam) ||
+  project?.servers?.[0]
+  : project?.servers?.[0];
+  
   if (!server) {
     return (
       <div className="w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl p-3 lg:p-4 mb-4">
@@ -73,7 +73,14 @@ const ProjectInfoContent = () => {
       </div>
     );
   }
-
+  
+  const tags = [
+    server?.chronicle?.name,
+    server?.assembly_type,
+    server?.server_type_data?.name,
+    server?.rate ? (server.rate.startsWith('x') ? server.rate : `x${server.rate}`) : "",
+  ];
+  console.log(server);
   return (
     <>
       <div className="w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl p-3 lg:p-4 mb-4">
@@ -106,13 +113,13 @@ const ProjectInfoContent = () => {
         </Breadcrumb>
 
         <div className="grid md:grid-cols-2 gap-6 mt-7">
-          <div className="relative h-[266px]">
-            {/* <Image
-              src={project.banner}
+          <div className="relative h-[266px] rounded-3xl overflow-hidden">
+            <Image
+              src={server?.logo || ""}
               alt={project.name}
               fill
               className="object-cover"
-            /> */}
+            />
           </div>
           <div>
             <div className="flex-1 min-w-0">
@@ -127,23 +134,25 @@ const ProjectInfoContent = () => {
                 {server?.short_description || server?.full_description || ""}
               </p>
               <div className="flex flex-wrap gap-2 mb-5">
-                {server?.chronicle && (
-                  <span className="px-2 py-1 rounded-md text-xs leading-4 font-bold bg-brand-btn text-white">
-                    {server.chronicle.name}
-                  </span>
-                )}
-                {server && (
-                  <span className="px-2 py-1 rounded-md text-xs leading-4 font-bold bg-brand-btn-gray-3 text-white">
-                    {t("project_info_server")}
-                  </span>
-                )}
-                {server && (
-                  <span
-                    className={`px-2 py-1 rounded-md text-xs leading-4 font-bold dark:text-white bg-white dark:bg-brand-dark border border-[#e6e9ec] dark:border-[#2c303c]`}
-                  >
-                    x{server.rate}
-                  </span>
-                )}
+                {tags.filter(tag => tag).map((tag, index) => {
+                  // First tag (chronicle) - orange background
+                  // Second tag (rate) - white background with border
+                  // Third tag (server type) - gray background
+                  const className = index === 0
+                    ? "bg-brand-btn text-white"
+                    : index == tags.length - 1
+                    ? "dark:text-white bg-white dark:bg-brand-dark border border-[#e6e9ec] dark:border-[#2c303c]"
+                    : "bg-brand-btn-gray-3 text-white";
+                  
+                  return (
+                    <span
+                      key={index}
+                      className={`px-2 py-1 rounded-md text-xs leading-4 font-bold ${className}`}
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
               </div>
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 sm:items-center justify-between w-full mb-8">
                 <div className="flex items-center gap-2">

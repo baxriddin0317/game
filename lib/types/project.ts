@@ -1,3 +1,5 @@
+import { ServerType } from "./server";
+
 export type Project = {
   id: number;
   name: string;
@@ -26,6 +28,7 @@ export type ProjectServer = {
   id: number;
   url_slug: string | null;
   announce_name: string;
+  assembly_type: string;
   rating_name: string;
   meta_title: string | null;
   meta_description: string | null;
@@ -34,6 +37,7 @@ export type ProjectServer = {
   server_type_id: number;
   launch_date: string;
   short_description: string;
+  server_type_data: ServerType;
   full_description: string | null;
   logo: string | null;
   votes_count: number;

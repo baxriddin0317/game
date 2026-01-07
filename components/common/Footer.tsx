@@ -42,7 +42,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-brand-main dark:bg-brand-main-dark py-14 ">
+    <footer className="bg-brand-main dark:bg-brand-main-dark py-14 relative z-20">
       <div
         className={`max-w-[1364px] xl:w-[90%] mx-auto flex flex-col-reverse md:flex-row items-start justify-between gap-10 md:gap-5 px-4 xl:px-2`}
       >
