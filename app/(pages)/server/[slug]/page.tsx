@@ -80,6 +80,7 @@ const ProjectInfoContent = () => {
     server?.server_type_data?.name,
     server?.rate ? (server.rate.startsWith('x') ? server.rate : `x${server.rate}`) : "",
   ];
+  
   console.log(server);
   return (
     <>
@@ -115,8 +116,8 @@ const ProjectInfoContent = () => {
         <div className="grid md:grid-cols-2 gap-6 mt-7">
           <div className="relative h-[266px] rounded-3xl overflow-hidden">
             <Image
-              src={server?.logo || ""}
-              alt={project.name}
+              src={server?.banner || ""}
+              alt={server?.banner_alt || ""}
               fill
               className="object-cover"
             />

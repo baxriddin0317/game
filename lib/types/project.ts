@@ -29,6 +29,9 @@ export type ProjectServer = {
   url_slug: string | null;
   announce_name: string;
   assembly_type: string;
+  banner: string;
+  banner_alt: string;
+  banner_url: string;
   rating_name: string;
   meta_title: string | null;
   meta_description: string | null;
