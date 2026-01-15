@@ -23,6 +23,7 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Image from "next/image";
+import { IoImageOutline } from "react-icons/io5";
 
 const ProjectInfoContent = () => {
   const [isVoted, setIsVoted] = useState(false);
@@ -81,7 +82,7 @@ const ProjectInfoContent = () => {
     server?.rate ? (server.rate.startsWith('x') ? server.rate : `x${server.rate}`) : "",
   ];
   
-  console.log(server);
+  console.log("server page:", server);
   return (
     <>
       <div className="w-full flex-1 bg-white dark:bg-brand-main-dark rounded-2xl p-3 lg:p-4 mb-4">
@@ -114,13 +115,17 @@ const ProjectInfoContent = () => {
         </Breadcrumb>
 
         <div className="grid md:grid-cols-2 gap-6 mt-7">
-          <div className="relative h-[266px] rounded-3xl overflow-hidden">
-            <Image
-              src={server?.banner || ""}
-              alt={server?.banner_alt || ""}
-              fill
-              className="object-cover"
-            />
+          <div className={`w-full aspect-[649/266] h-[266px] overflow-hidden relative rounded-2xl ${!server?.banner ? "border border-[#e8ebf1] dark:border-[#313541]" : ""} flex items-center justify-center`}>
+            {server?.banner ? (
+              <Image
+                src={server?.banner || ""}
+                alt={server?.banner_alt || ""}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <IoImageOutline className="text-[#e8ebf1] dark:text-brand-btn-gray size-28" />
+            )}
           </div>
           <div>
             <div className="flex-1 min-w-0">
@@ -163,7 +168,7 @@ const ProjectInfoContent = () => {
                   <span className="text-xs font-bold text-brand-primary dark:text-[#84889a]">
                     {t("project_info_votes")}{" "}
                     <span className="text-brand-btn">
-                      {server?.votes_count || project.total_votes}
+                      {server?.votes_count.toLocaleString()|| project.total_votes.toLocaleString()}
                     </span>
                   </span>
                 </div>

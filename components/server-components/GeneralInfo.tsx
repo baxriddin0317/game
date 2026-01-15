@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Titlemini from "./TitleMini";
 import { ProjectDetail } from "@/lib/types/project";
 import { useTranslation } from "@/contexts/LanguageContext";
+import { IoImageOutline } from "react-icons/io5";
 
 type GeneralInfoProps = {
   project: ProjectDetail;
@@ -30,6 +31,11 @@ const GeneralInfo = ({ project, selectedServerId }: GeneralInfoProps) => {
   
   const defaultValue = selectedServer.url_slug || selectedServer.id.toString();
 
+  const sanitizeDescriptionHtml = (html: string) => {
+    // Remove figcaption blocks if backend provides them inside description HTML
+    return html.replace(/<figcaption\b[^>]*>[\s\S]*?<\/figcaption>/gi, "");
+  };
+
   return (
     <div className="py-6 px-3 lg:px-7">
       <Tabs defaultValue={defaultValue} className="w-full">
@@ -49,6 +55,15 @@ const GeneralInfo = ({ project, selectedServerId }: GeneralInfoProps) => {
         </TabsList>
         {project.servers.map((server) => {
           const value = server.url_slug || server.id.toString();
+          const descriptionHtml =
+            sanitizeDescriptionHtml(
+              server.full_description ||
+                server.short_description ||
+                t("general_info_no_description")
+            );
+          const hasImageInDescription = /<img[^>]*>/i.test(
+            server.full_description || server.short_description || ""
+          );
           return (
             <TabsContent key={server.id} value={value}>
               <div className="flex flex-col lg:flex-row items-start gap-8 py-6">
@@ -91,13 +106,15 @@ const GeneralInfo = ({ project, selectedServerId }: GeneralInfoProps) => {
                 </div>
                 <div className="flex-1 w-full">
                   <Titlemini title={t("general_info_description")} className="mb-5" />
+                  {!hasImageInDescription && (
+                    <div className="flex items-center justify-center relative h-[269px] rounded-3xl overflow-hidden bg-brand-gray-2 dark:bg-[#20232d] text-xs text-[#5b646b] dark:text-[#797e8c]">
+                      <IoImageOutline className="text-[#e8ebf1] dark:text-brand-btn-gray size-28" />
+                    </div>
+                  )}
                   <div
                     className="text-sm font-medium text-brand-primary-3 dark:text-white"
                     dangerouslySetInnerHTML={{
-                      __html:
-                        server.full_description ||
-                        server.short_description ||
-                        t("general_info_no_description"),
+                      __html: descriptionHtml,
                     }}
                   />
                 </div>

@@ -31,7 +31,7 @@ const TopServers = () => {
       </>
     );
   }
-
+  console.log("top servers page:", topServers);
   return (
     <>
       <MobileFilterSidebar />
