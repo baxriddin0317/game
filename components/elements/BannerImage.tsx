@@ -9,8 +9,8 @@ const BannerImage = () => {
   const { data: backgroundsData, isLoading } = useAdvertisementsBackground();
   
   // Get the first background advertisement or use fallback
-  const backgroundImage = backgroundsData?.data?.[1];
-
+  const backgroundImage = backgroundsData?.data?.[0];
+  
   const imageSrc = backgroundImage?.image || "";
   const imageAlt = backgroundImage?.alt || "banner image";
   const hasLink = backgroundImage?.link;

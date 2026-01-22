@@ -6,7 +6,7 @@ import CustomSelect from "../elements/CustomSelect";
 import { TopIcon } from "@/icons";
 import Image from "next/image";
 import Link from "next/link";
-import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
+import { useAdvertisementsBackground, useAdvertisementsBanner } from "@/lib/queries/useAdvertisements";
 import { Url } from "next/dist/shared/lib/router/router";
 import { useRates } from "@/lib/queries/useRates";
 import { useChronicles } from "@/lib/queries/useChronicles";
@@ -16,6 +16,7 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useRegisterLoader } from "@/lib/hooks/useRegisterLoader";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { useEffect, useState } from "react";
 
 const SearchSidebar = () => {
   return (
@@ -37,22 +38,38 @@ export const formatVotes = (votes: number) => {
 export const FilterContent = () => {
   const { applyFilters } = useFilter();
   const { t } = useTranslation();
+  const [currentAdIndex, setCurrentAdIndex] = useState(0);
   const {
-    data: advertisementsBackground,
-    isLoading: advertisementsBackgroundLoading,
-  } = useAdvertisementsBackground();
-
+    data: advertisementsBanner,
+    isLoading: advertisementsBannerLoading,
+  } = useAdvertisementsBanner();
+  
   const { data: rates, isLoading: ratesLoading } = useRates();
   const { data: chronicles, isLoading: chroniclesLoading } = useChronicles();
   const { data: top5Servers, isLoading: top5Loading } = useTop5Servers();
   const { data: serverTypes, isLoading: serverTypesLoading } = useGetServerTypes();
   
   // Register all data loaders
-  useRegisterLoader(advertisementsBackgroundLoading, "sidebar-advertisements");
+  useRegisterLoader(advertisementsBannerLoading, "sidebar-advertisements");
   useRegisterLoader(ratesLoading, "sidebar-rates");
   useRegisterLoader(chroniclesLoading, "sidebar-chronicles");
   useRegisterLoader(top5Loading, "sidebar-top5");
   useRegisterLoader(serverTypesLoading, "sidebar-servers-type");
+
+  useEffect(() => {
+    if (!advertisementsBanner?.data || advertisementsBanner.data.length === 0) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setCurrentAdIndex((prev) => {
+        const nextIndex = prev + 1;
+        return nextIndex >= advertisementsBanner.data.length -1 ? 0 : nextIndex;
+      });
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [advertisementsBanner?.data]);
 
   return (
     <>
@@ -163,16 +180,18 @@ export const FilterContent = () => {
 
       <div className="mb-5 px-5">
         <div className="w-full flex items-center justify-center h-[475px] rounded-2xl bg-brand-main-2">
-          {advertisementsBackgroundLoading || advertisementsBackground === undefined ? (
+          {advertisementsBannerLoading || advertisementsBanner === undefined || advertisementsBanner.data.length === 0 ? (
             <div></div>
           ) : (
             <Link
-              href={advertisementsBackground?.data[0].link as Url}
+              href={advertisementsBanner?.data[currentAdIndex].link as Url}
               className="relative w-[240px] h-[400px] rounded-lg overflow-hidden"
             >
-              <img
-                src={advertisementsBackground?.data[0].image}
-                alt={t("search_banner")}
+              <Image
+                key={currentAdIndex}
+                src={advertisementsBanner?.data[currentAdIndex].image}
+                alt={advertisementsBanner.data[currentAdIndex].name}
+                fill
                 className="w-full h-full object-cover"
               />
             </Link>
