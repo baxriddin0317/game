@@ -64,9 +64,9 @@ export const FilterContent = () => {
     const interval = setInterval(() => {
       setCurrentAdIndex((prev) => {
         const nextIndex = prev + 1;
-        return nextIndex >= advertisementsBanner.data.length -1 ? 0 : nextIndex;
+        return nextIndex >= advertisementsBanner.data.length ? 0 : nextIndex;
       });
-    }, 10000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [advertisementsBanner?.data]);
