@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
 import Link from "next/link";
-import { IoImageOutline } from "react-icons/io5";
 
 const BannerImage = () => {
   const { data: backgroundsData, isLoading } = useAdvertisementsBackground();
@@ -34,7 +33,20 @@ const BannerImage = () => {
         </Link>
       ) : (
         <div className="flex items-center justify-center relative w-screen h-[500px] z-10">
-          <IoImageOutline className="text-[#e8ebf1] dark:text-brand-btn-gray size-28" />
+          <Image
+            src="/left.png"
+            alt="Left"
+            width={1658}
+            height={900}
+            className=" absolute top-0 left-0 z-0 w-[1658px] h-auto mix-blend-mode"
+          />
+          <Image
+            src="/right.png"
+            alt="Right"
+            width={1487}
+            height={999}
+            className=" absolute top-0 right-0 z-0 w-[1487px] h-auto dark:mix-blend-mode"
+          />
         </div>
       )}
     </>
