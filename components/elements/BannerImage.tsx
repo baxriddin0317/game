@@ -13,8 +13,8 @@ const BannerImage = () => {
   const backgroundImage = backgroundsData?.data?.[0];
   
   const imageSrc = backgroundImage?.image || "";
-  const imageAlt = t("imageAlt");
-  const imageTitle = t("imageTitle");
+  const imageAlt = backgroundImage?.alt || "";
+  const imageTitle = backgroundImage?.title;
   const hasLink = backgroundImage?.link;
   console.log(backgroundImage)
   const imageContent = (
