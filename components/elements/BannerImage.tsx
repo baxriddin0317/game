@@ -1,22 +1,25 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
 import Link from "next/link";
-import { useTranslation } from "@/contexts/LanguageContext";
+import { useTranslation, useLanguageStore } from "@/contexts/LanguageContext";
 
 const BannerImage = () => {
-  const { data: backgroundsData, isLoading } = useAdvertisementsBackground();
+  const currentLanguage = useLanguageStore((state) => state.currentLanguage);
+  const { data: backgroundsData, isLoading, refetch } = useAdvertisementsBackground();
   const { t } = useTranslation();
 
-  // Get the first background advertisement or use fallback
+  useEffect(() => {
+    refetch();
+  }, [currentLanguage]);
+
   const backgroundImage = backgroundsData?.data?.[0];
   
   const imageSrc = backgroundImage?.image || "";
   const imageAlt = backgroundImage?.alt || "";
   const imageTitle = backgroundImage?.title;
   const hasLink = backgroundImage?.link;
-  console.log(backgroundImage)
   const imageContent = (
     <Image
       src={imageSrc}
@@ -28,7 +31,7 @@ const BannerImage = () => {
       priority
     />
   );
-  
+  console.log(backgroundsData)
   return (
     <>
       {hasLink ? (

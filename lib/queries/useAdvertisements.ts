@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../api";
 import { AdvertisementResponse } from "../types/advertisement";
+import { useLanguageStore } from "@/contexts/LanguageContext";
 
 const getAdvertisementsBanner = async (): Promise<AdvertisementResponse> => {
   const response = await axiosInstance.get("/advertisements/banners");
@@ -19,18 +20,22 @@ const getAdvertisementById = async (id: string) => {
 };
 
 export const useAdvertisementsBanner = () => {
+  const currentLanguage = useLanguageStore((state) => state.currentLanguage);
   return useQuery({
-    queryKey: ["advertisements-banner"],
+    queryKey: ["advertisements-banner", currentLanguage],
     queryFn: getAdvertisementsBanner,
-    staleTime: 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 };
 
 export const useAdvertisementsBackground = () => {
+  const currentLanguage = useLanguageStore((state) => state.currentLanguage);
   return useQuery({
-    queryKey: ["advertisements-backgrounds"],
+    queryKey: ["advertisements-backgrounds", currentLanguage],
     queryFn: getAdvertisementsBackground,
-    staleTime: 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 };
 
