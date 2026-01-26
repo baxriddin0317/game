@@ -25,6 +25,7 @@ export const useAdvertisementsBanner = () => {
     queryKey: ["advertisements-banner", currentLanguage],
     queryFn: getAdvertisementsBanner,
     staleTime: 0,
+    gcTime: 0,
     refetchOnMount: true,
   });
 };
@@ -35,6 +36,7 @@ export const useAdvertisementsBackground = () => {
     queryKey: ["advertisements-backgrounds", currentLanguage],
     queryFn: getAdvertisementsBackground,
     staleTime: 0,
+    gcTime: 0,
     refetchOnMount: true,
   });
 };

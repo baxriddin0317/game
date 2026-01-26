@@ -1,18 +1,13 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
 import Link from "next/link";
-import { useTranslation, useLanguageStore } from "@/contexts/LanguageContext";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 const BannerImage = () => {
-  const currentLanguage = useLanguageStore((state) => state.currentLanguage);
-  const { data: backgroundsData, isLoading, refetch } = useAdvertisementsBackground();
+  const { data: backgroundsData, isLoading } = useAdvertisementsBackground();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    refetch();
-  }, [currentLanguage]);
 
   const backgroundImage = backgroundsData?.data?.[0];
   
