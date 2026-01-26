@@ -3,21 +3,25 @@ import Image from "next/image";
 import React from "react";
 import { useAdvertisementsBackground } from "@/lib/queries/useAdvertisements";
 import Link from "next/link";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 const BannerImage = () => {
   const { data: backgroundsData, isLoading } = useAdvertisementsBackground();
-  
+  const { t } = useTranslation();
+
   // Get the first background advertisement or use fallback
   const backgroundImage = backgroundsData?.data?.[0];
   
   const imageSrc = backgroundImage?.image || "";
-  const imageAlt = backgroundImage?.alt || "banner image";
+  const imageAlt = t("imageAlt");
+  const imageTitle = t("imageTitle");
   const hasLink = backgroundImage?.link;
-  
+  console.log(backgroundImage)
   const imageContent = (
     <Image
       src={imageSrc}
       alt={imageAlt}
+      title={imageTitle}
       width={1487}
       height={400}
       className=" absolute left-1/2 -translate-x-1/2 right-0 z-10 w-full h-auto dark:mix-blend-mode"

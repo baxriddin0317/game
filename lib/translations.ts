@@ -19,6 +19,8 @@ export const translations = {
     user: "Пользователь",
     l2pick: "l2pick.",
     com: "com",
+    imageTitle: "Добро пожаловать на наш сайт",
+    imageAlt: "Баннер изображение главной страницы",
 
     // Auth Page
     auth_tab_title: "АВТОРИЗАЦИЯ",
@@ -381,6 +383,8 @@ export const translations = {
     user: "User",
     l2pick: "l2pick.",
     com: "com",
+    imageTitle: "Welcome to our website",
+    imageAlt: "Main page banner image",
 
     // Auth Page
     auth_tab_title: "AUTHORIZATION",
