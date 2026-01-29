@@ -15,12 +15,14 @@ function Section({
   icon,
   vip,
   servers,
+  side,
 }: {
   title: string;
   subtitle?: string;
   icon?: React.ReactNode;
   vip?: boolean;
   servers?: ServerResponse;
+  side?: "left" | "right" | null;
 }) {
   const { t } = useTranslation();
   const [openAccordionId, setOpenAccordionId] = useState<number | null>(null);
@@ -30,7 +32,15 @@ function Section({
   };
 
   return (
-    <div className="mb-6">
+    <div
+      className={`mb-6 ${
+        side === "left"
+          ? "md:col-start-1"
+          : side === "right"
+            ? "md:col-start-2"
+            : "md:col-start-1"
+      }`}
+    >
       <div className="flex items-center justify-between gap-3 mb-3">
         <h3 className="flex items-center gap-1 text-brand-primary-3 dark:text-white font-bold text-lg">
           {icon}
@@ -144,6 +154,9 @@ export default function ServersSection() {
     lastWeekAndEarlierServersData?.data &&
     lastWeekAndEarlierServersData.data.length > 0;
 
+  const getSide = (servers?: ServerResponse) =>
+    servers?.data?.[0]?.side ?? null;
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-5.5 ">
@@ -155,6 +168,7 @@ export default function ServersSection() {
             title={t("servers_section_coming_soon")}
             vip={true}
             servers={soonServers}
+            side={getSide(soonServers)}
           />
         )}
         {hasOpenedServers && (
@@ -165,6 +179,7 @@ export default function ServersSection() {
             title={t("servers_section_already_opened")}
             vip={true}
             servers={openedServersData}
+            side={getSide(openedServersData)}
           />
         )}
         {hasTodayServers && (
@@ -172,18 +187,21 @@ export default function ServersSection() {
             title={t("servers_section_today")}
             subtitle={todaySubtitle}
             servers={todayServersData}
+            side={getSide(todayServersData)}
           />
         )}
         {hasNextSevenDaysServers && (
           <Section
             title={t("servers_section_next_seven_days")}
             servers={nextSevenDaysServersData}
+            side={getSide(nextSevenDaysServersData)}
           />
         )}
         {hasNextWeekAndLaterServers && (
           <Section
             title={t("servers_section_next_week_later")}
             servers={nextWeekAndLaterServersData}
+            side={getSide(nextWeekAndLaterServersData)}
           />
         )}
         {hasTomorrowServers && (
@@ -191,6 +209,7 @@ export default function ServersSection() {
             title={t("servers_section_tomorrow")}
             subtitle={tomorrowSubtitle}
             servers={tomorrowServersData}
+            side={getSide(tomorrowServersData)}
           />
         )}
         {hasYesterdayServers && (
@@ -198,18 +217,21 @@ export default function ServersSection() {
             title={t("servers_section_yesterday")}
             subtitle={yesterdaySubtitle}
             servers={yesterdayServersData}
+            side={getSide(yesterdayServersData)}
           />
         )}
         {hasPreviousSevenDaysServers && (
           <Section
             title={t("servers_section_previous_seven_days")}
             servers={previousSevenDaysServersData}
+            side={getSide(previousSevenDaysServersData)}
           />
         )}
         {hasLastWeekAndEarlierServers && (
           <Section
             title={t("servers_section_last_week_earlier")}
             servers={lastWeekAndEarlierServersData}
+            side={getSide(lastWeekAndEarlierServersData)}
           />
         )}
       </div>

@@ -190,8 +190,18 @@ export const FilterContent = () => {
               <Image
                 key={currentAdIndex}
                 src={advertisementsBanner?.data[currentAdIndex].image}
-                alt={advertisementsBanner.data[currentAdIndex].name}
-                title={advertisementsBanner.data[currentAdIndex].title}
+                alt={
+                  advertisementsBanner.data[currentAdIndex].alt ||
+                  advertisementsBanner.data[currentAdIndex].title ||
+                  advertisementsBanner.data[currentAdIndex].name ||
+                  "Advertisement"
+                }
+                title={
+                  advertisementsBanner.data[currentAdIndex].title ||
+                  advertisementsBanner.data[currentAdIndex].name ||
+                  advertisementsBanner.data[currentAdIndex].alt ||
+                  "Advertisement"
+                }
                 fill
                 className="w-full h-full object-cover"
               />

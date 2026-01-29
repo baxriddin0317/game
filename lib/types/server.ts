@@ -53,6 +53,7 @@ export type GroupedServersResponse = {
 
 export type Server = {
   id: number;
+  side?: "left" | "right" | null;
   url_slug: string;
   announce_name: string;
   assembly_type: string;

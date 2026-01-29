@@ -26,7 +26,7 @@ const BannerImage = () => {
       priority
     />
   );
-  console.log(backgroundsData)
+  
   return (
     <>
       {hasLink ? (
