@@ -38,7 +38,7 @@ function Section({
           ? "md:col-start-1"
           : side === "right"
             ? "md:col-start-2"
-            : "md:col-start-1"
+            : ""
       }`}
     >
       <div className="flex items-center justify-between gap-3 mb-3">
