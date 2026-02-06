@@ -7,6 +7,7 @@ import {
   CreateServerRequest,
   ServerType,
   ServerTypesResponse,
+  ServerBlocksResponse,
 } from "../types/server";
 
 type ServerStatus =
@@ -59,6 +60,18 @@ const getGroupedServers = async (
   return response.data;
 };
 
+const getServerBlocks = async (): Promise<ServerBlocksResponse> => {
+  const response = await axiosInstance.get("/server-blocks");
+  return response.data;
+};
+
+const getServerBlockServers = async (
+  blockId: number
+): Promise<ServerResponse> => {
+  const response = await axiosInstance.get(`/server-blocks/${blockId}/servers`);
+  return response.data;
+};
+
 const createServer = async (data: CreateServerRequest): Promise<Server> => {
   const config = data instanceof FormData 
     ? {
@@ -103,6 +116,21 @@ export const useGroupedServers = (params?: GetServersParams) => {
   return useQuery({
     queryKey: ["grouped-servers", params],
     queryFn: () => getGroupedServers(params),
+  });
+};
+
+export const useServerBlocks = () => {
+  return useQuery({
+    queryKey: ["server-blocks"],
+    queryFn: getServerBlocks,
+  });
+};
+
+export const useServerBlockServers = (blockId: number) => {
+  return useQuery({
+    queryKey: ["server-block-servers", blockId],
+    queryFn: () => getServerBlockServers(blockId),
+    enabled: !!blockId,
   });
 };
 

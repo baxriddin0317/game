@@ -51,6 +51,27 @@ export type GroupedServersResponse = {
   };
 };
 
+export type ServerBlockIcon = {
+  id: number;
+  name: string;
+  icon: string;
+};
+
+export type ServerBlock = {
+  id: number;
+  title: string;
+  subtitle?: string | null;
+  icon?: ServerBlockIcon | null;
+  side: "left" | "right";
+  sort_order: number;
+  is_active: boolean;
+  servers_count: number;
+};
+
+export type ServerBlocksResponse = {
+  data: ServerBlock[];
+};
+
 export type Server = {
   id: number;
   side?: "left" | "right" | null;
