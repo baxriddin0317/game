@@ -11,14 +11,12 @@ function Section({
   title,
   subtitle,
   icon,
-  vip,
   side,
 }: {
   blockId: number;
   title: string;
   subtitle?: string;
   icon?: React.ReactNode;
-  vip?: boolean;
   side?: "left" | "right" | null;
 }) {
   const { t } = useTranslation();
@@ -45,16 +43,11 @@ function Section({
         <h3 className="flex items-center gap-1 text-brand-primary-3 dark:text-white font-bold text-lg">
           {icon}
           <span className="line-clamp-1 font-exo2">{title}</span>
-
-          <span className="text-xs ml-1 mt-1 text-nowrap font-exo2">
+        </h3>
+        
+          <span className="bg-brand-gray-2 dark:bg-[#13151d] font-exo2 text-sm text-nowrap flex items-center justify-center h-8 text-brand-btn font-extrabold px-3 rounded-md ">
             {subtitle}
           </span>
-        </h3>
-        {vip && (
-          <span className="bg-brand-gray-2 dark:bg-[#13151d] font-exo2 text-sm text-nowrap flex items-center justify-center h-8 text-brand-btn font-extrabold px-3 rounded-md ">
-            {t("servers_section_vip")}
-          </span>
-        )}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -80,7 +73,7 @@ export default function ServersSection() {
   const sortedBlocks = (blocksData?.data || [])
     .filter((block) => block.is_active)
     .sort((a, b) => a.sort_order - b.sort_order);
-
+  console.log(blocksData)
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-5.5 ">
@@ -94,8 +87,6 @@ export default function ServersSection() {
               />
             ) : undefined;
 
-          const vip = index === 0;
-
           return (
             <Section
               key={block.id}
@@ -103,7 +94,6 @@ export default function ServersSection() {
               icon={icon}
               title={block.title}
               subtitle={block.subtitle ?? undefined}
-              vip={vip}
               side={block.side}
             />
           );
